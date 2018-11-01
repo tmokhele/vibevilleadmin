@@ -1,0 +1,87 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-rose">
+        <h4 class="card-title">Create System User</h4>
+        <p class="card-category">New user and login profile</p>
+      </div>
+      <div class="card-body">
+        <mat-card fxFlex="auto">
+          <mat-horizontal-stepper linear #stepper="matHorizontalStepper">
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup" #userform="ngForm"  >
+                <ng-template matStepLabel>Personal Details</ng-template>
+                <mat-card fxFlex fxFlexAlign="start">
+                  <mat-card-content>
+                    <div fxLayout="column wrap" fxLayoutGap="25px" fxLayoutGap.xs="0">
+                      <mat-form-field fxFlex="25">
+                        <input matInput [(ngModel)]="userInfo.name" placeholder="First name" formControlName="name" required>
+                      </mat-form-field>
+                      <mat-form-field fxFlex="25">
+                        <input matInput [(ngModel)]="userInfo.surname" placeholder="Last name" formControlName="surname" required>
+                      </mat-form-field>
+                      <mat-form-field fxFlex="25">
+                        <input matInput [(ngModel)]="userInfo.emailAddress" placeholder="Email Address" formControlName="emailAddress" required>
+                      </mat-form-field>
+                      <mat-form-field fxFlex="25">
+                        <input matInput [(ngModel)]="userInfo.contactNumber" placeholder="Contact Number" minlength="10" formControlName="contactNumber" required>
+                      </mat-form-field>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button mat-raised-button color="accent" [disabled]="userform.invalid" matStepperNext>Next</button>
+                  </mat-card-actions>
+
+                </mat-card>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup" #form="ngForm" >
+                  <ng-template matStepLabel>System Permissions</ng-template>
+                    <mat-card fxFlex fxFlexAlign="start">
+                      <mat-card-content>
+                        <div fxLayout="column wrap" fxLayoutGap="25px" fxLayoutGap.xs="0">
+                          <mat-form-field fxFlex="25">
+                            <mat-select [(ngModel)]="userInfo.role" placeholder="" formControlName="role" [errorStateMatcher]="matcher">
+                              <mat-option value="invalid">Select Role</mat-option>
+                              <mat-option value="ROLE_ADMIN">Administrator</mat-option>
+                              <mat-option value="ROLE_USER">User</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <div fxLayout="row" class="child">
+                            <mat-checkbox [(ngModel)]="userInfo.info" type="checkbox" formControlName="info">Create & Manage Users</mat-checkbox>
+                          </div>
+                          <div fxLayout="row">
+                            <mat-checkbox [(ngModel)]="userInfo.twitter" type="checkbox" formControlName="twitter">Manage Twitter</mat-checkbox>
+                          </div>
+                          <div fxLayout="row">
+                            <mat-checkbox [(ngModel)]="userInfo.faceBook" type="checkbox" formControlName="faceBook">Manage Facebook</mat-checkbox>
+                          </div>
+                          <div fxLayout="row">
+                            <mat-checkbox [(ngModel)]="userInfo.events" type="checkbox" formControlName="events">Manage Events & Peformances</mat-checkbox>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="accent" [disabled]="form.invalid" matStepperNext>Next</button>
+                      </mat-card-actions>
+                    </mat-card>
+                </form>
+              </mat-step>
+              <mat-step>
+                  <ng-template matStepLabel>Confirm</ng-template>
+    
+                  You are now done.
+                  <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button (click)="saveForm(stepper)"  mat-raised-button color="accent">Submit</button>
+                  </div>
+                </mat-step>
+          </mat-horizontal-stepper>
+
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1">
+                <a mat-icon-button disabled>
+                    <mat-icon>search</mat-icon>
+                </a>
+            </div>
+            <div class="col-md-9">
+                <mat-form-field class="search-form-field">
+                    <input matInput type="text" placeholder="Search by event name" [(ngModel)]="filterBy" />
+                    <button mat-button *ngIf="filterBy" matSuffix mat-icon-button aria-label="Clear" (click)="filterBy=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1">
+                <button mat-icon-button (click)="openDialog()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose">
+                        <h4 class="card-title ">Events</h4>
+                        <p class="card-category">Here is a list of out upcoming events</p>
+                    </div>
+                    <div *ngIf="(shopItems$ | async) as shopItems" class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>
+                                            Event Name
+                                        </th>
+                                        <th>
+                                            Event Category
+                                        </th>
+                                        <th>
+                                            Event Location
+                                        </th>
+                                        <th>
+                                            Cover Charge
+                                        </th>
+                                        <th>
+                                            Event Image
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
+                                    <tr>
+
+                                        <td>
+                                            {{shopItem.name}}
+                                        </td>
+                                        <td>
+                                            {{shopItem.category}}
+                                        </td>
+                                        <td>
+                                            {{shopItem.location}}
+                                        </td>
+
+                                        <td class="text-primary">
+                                            R{{shopItem.unitPrice}}.00
+                                        </td>
+                                        <td>
+                                            <div *ngIf='shopItem.imageUrl'>
+                                                <button mat-icon-button (click)="previewImage(shopItem.imageUrl)">
+
+                                                    <mat-icon>photo_library</mat-icon>
+                                                </button>
+                                            </div>
+                                            <div *ngIf='!shopItem.imageUrl'>
+                                                <button mat-icon-button (click)="addImage(shopItem)">
+                                                    <mat-icon>add_a_photo</mat-icon>
+                                                </button>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div mat-dialog-title>
+    <h4>Message</h4>
+
+</div>
+<div mat-dialog-content>
+    <div *ngFor="let alert of alerts" class="{{ cssClass(alert) }}">
+        {{alert.message}}
+        <!-- <a class="close" (click)="removeAlert(alert)">&times;</a> -->
+    </div>
+</div>
+<mat-dialog-actions align="end">
+
+        <button class="btn btn-danger btn-round" [mat-dialog-close]="true">Ok</button>
+
+</mat-dialog-actions>
