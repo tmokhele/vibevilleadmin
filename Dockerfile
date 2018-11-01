@@ -1,10 +1,5 @@
-
-#########################
-### build environment ###
-#########################
-
 # base image
-FROM node:9.6.1 as builder
+FROM node:9.6.1
 
 # install chrome for protractor tests
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -21,31 +16,10 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
 RUN npm install
-RUN npm install --save-dev @angular-devkit/build-angular
-RUN npm link
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@1.7.1
 
 # add app
 COPY . /usr/src/app
 
-# run tests
-# RUN ng test --watch=false
-
-# generate build
-RUN npm run build
-
-##################
-### production ###
-##################
-
-# base image
-FROM nginx:1.13.9-alpine
-
-# copy artifact build from the 'build environment'
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
-
-# expose port 80
-EXPOSE 80
-
-# run nginx
-CMD ["nginx", "-g", "daemon off;"]
+# start app
+CMD ng serve --host 0.0.0.0
