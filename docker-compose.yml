@@ -2,13 +2,10 @@ version: '3.5'
 
 services:
 
-  vibeviller-admin:
+  something-clever-prod:
     container_name: vibeviller-admin
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
     ports:
-      - '4200:4200'
+      - '80:80'
