@@ -13,10 +13,10 @@ export class RequestInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    console.log("intercepted request ... ");
-    // var url ='http://52.14.223.190:8086/api/'+req.url;
-    var url ='http://localhost:8086/api/'+req.url;
-    var token =this.auth.getToken();
+    console.log('intercepted request ... ');
+    const url = 'http://52.14.223.190:8086/api/'+req.url;
+    // var url ='http://localhost:8086/api/'+req.url;
+    const token = this.auth.getToken();
     const authReq = req.clone({
       url:url,
       setHeaders:
@@ -33,7 +33,7 @@ export class RequestInterceptor implements HttpInterceptor {
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
         this.loaderService.display(false);
-        if (err.status === 401) { 
+        if (err.status === 401) {
           this.router.navigate(['/login']);
         }
       }
