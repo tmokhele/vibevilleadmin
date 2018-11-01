@@ -15,6 +15,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
+RUN npm install @angular/core
 RUN npm install npm@latest
 RUN npm install -g @angular/cli
 
