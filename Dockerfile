@@ -15,7 +15,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
-RUN npm cache clean
+RUN npm cache clean --force
 RUN npm install -g n
 RUN npm install -g @angular/cli@1.7.1
 
