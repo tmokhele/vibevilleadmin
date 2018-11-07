@@ -1,97 +1,183 @@
-<div mat-dialog-title>
-    <h4>Add Event</h4>
-</div>
-<div mat-dialog-content>
-    <form fxLayout="column" novalidate [formGroup]="shopItemForm">
-        <div fxLayout="row" fxLayoutAlign="center">
-            <div fxFlex="50%">
-                <mat-form-field class="standard">
-                    <input matInput placeholder="Event Name" formControlName="name" required>
-                    <mat-error *ngIf="validation.check('name').result">
-                        {{validation.check('name').message}}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="standard">
-                    <mat-select formControlName="category" placeholder="Event Category">
-                        <mat-option value="jazz">
-                            Jazz
-                        </mat-option>
-                        <mat-option value="hiphop">
-                            Hip-Hop
-                        </mat-option>
-                        <mat-option value="gospel">
-                            Gospel
-                        </mat-option>
-                        <mat-option value="rnb">
-                            R&B
-                        </mat-option>
-                        <mat-option value="house">
-                            House
-                        </mat-option>
-                        <mat-option value="other">
-                            Other
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="standard">
-                    <input matInput placeholder="Event Location" formControlName="location" required>
-                    <mat-error *ngIf="validation.check('location').result">
-                        {{validation.check('location').message}}
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div fxFlex="50%">
-                <mat-form-field class="standard">
-                    <input matInput placeholder="Cover Charge" formControlName="unitPrice" required>
-                    <span matPrefix>R&nbsp;</span>
-                    <span matSuffix>.00</span>
-                    <mat-error *ngIf="validation.check('unitPrice').result">
-                        {{validation.check('unitPrice').message}}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="standard">
-                    <input matInput formControlName="releaseDate" [matDatepicker]="picker" placeholder="Event Date">
-                    <mat-datepicker-toggle matSuffix [for]="picker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-rose">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#event" data-toggle="tab">
+                                            <i class="material-icons">library_music</i> Event
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#performances" data-toggle="tab">
+                                            <i class="material-icons">mic</i> Performances
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="event">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <form novalidate [formGroup]="shopItemForm">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <mat-form-field class="standard">
+                                                                <input matInput placeholder="Event Name" formControlName="name"
+                                                                    required>
+                                                                <mat-error *ngIf="validation.check('name').result">
+                                                                    {{validation.check('name').message}}
+                                                                </mat-error>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                            <mat-checkbox  type="checkbox" formControlName="early" (change)="onChange($event)"><mat-form-field class="standard">
+                                                                <input matInput placeholder="Early Bird Tickets" formControlName="earlyamount"
+                                                                    >
+                                                                    <span matPrefix>R&nbsp;</span>
+                                                                    <span matSuffix>.00</span>
+                                                                <mat-error *ngIf="validation.check('early').result || validation.check('earlyamount').result ">
+                                                                    {{validation.check('earlyamount').message}}
+                                                                    {{validation.check('early').message}}
+                                                                </mat-error>
+                                                            </mat-form-field></mat-checkbox>
+                                                     
+                                                          </div>
+                                                          <div class="row">
+                                                            <mat-checkbox type="checkbox" formControlName="vip"  (change)="onChange($event)"><mat-form-field class="standard">
+                                                                <input matInput placeholder="Vip" formControlName="vipamount">
+                                                                    <span matPrefix>R&nbsp;</span>
+                                                                    <span matSuffix>.00</span>
+                                                                <mat-error *ngIf="validation.check('vip').result || validation.check('vipamount').result ">
+                                                                    {{validation.check('vipamount').message}}
+                                                                    {{validation.check('vip').message}}
+                                                                </mat-error>
+                                                            </mat-form-field></mat-checkbox>
+                                                          </div>
+                                                          <div class="row">
+                                                            <mat-checkbox  type="checkbox" formControlName="general" (change)="onChange($event)"><mat-form-field class="standard">
+                                                                <input matInput placeholder="General Access" formControlName="generalamount">
+                                                                    <span matPrefix>R&nbsp;</span>
+                                                                    <span matSuffix>.00</span>
+                                                                <mat-error *ngIf="validation.check('general').result || validation.check('generalamount').result">
+                                                                    {{validation.check('generalamount').message}}
+                                                                    {{validation.check('general').message}}
+                                                                </mat-error>
+                                                            </mat-form-field></mat-checkbox>
+                                                            </div>
+                                                        </div>
+                    
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <mat-form-field class="standard">
+                                                                <mat-select formControlName="category" placeholder="Event Category">
+                                                                    <mat-option value="jazz">
+                                                                        Jazz
+                                                                    </mat-option>
+                                                                    <mat-option value="hiphop">
+                                                                        Hip-Hop
+                                                                    </mat-option>
+                                                                    <mat-option value="gospel">
+                                                                        Gospel
+                                                                    </mat-option>
+                                                                    <mat-option value="rnb">
+                                                                        R&B
+                                                                    </mat-option>
+                                                                    <mat-option value="house">
+                                                                        House
+                                                                    </mat-option>
+                                                                    <mat-option value="other">
+                                                                        Other
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <mat-form-field class="standard">
+                                                                <input matInput placeholder="Event Location" formControlName="location"
+                                                                    required>
+                                                                <mat-error *ngIf="validation.check('location').result">
+                                                                    {{validation.check('location').message}}
+                                                                </mat-error>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <mat-form-field class="standard">
+                                                                <input matInput formControlName="releaseDate" [matDatepicker]="picker"
+                                                                    placeholder="Event Date">
+                                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                            </mat-form-field>
+                
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <mat-form-field class="large">
+                                                                <textarea matInput placeholder="A brief description of the event"
+                                                                    matTextareaAutosize matAutosizeMinRows="3" matAutosizeMaxRows="5"
+                                                                    formControlName="description"></textarea>
+                                                                <mat-error *ngIf="validation.check('description').result">
+                                                                    {{validation.check('description').message}}
+                                                                </mat-error>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" formControlName="imageUrl" />
+                
+                                                    <button mat-button (click)="fileInput.click()" color="accent">
+                                                        <mat-icon>cloud_upload</mat-icon>
+                                                        Upload Event Image
+                                                    </button>
+                                                    <input type="file" id="leaveapplication.attachment" style="display: none" class="hidden-input"
+                                                        (change)="onFileChange($event)" accept="image/jpeg, .jpeg, image/png, .png, image/pjpeg, .jpg"
+                                                        #fileInput>
+                                                    <mat-list>
+                                                        <mat-list-item *ngFor="let file of files">
+                                                            <button mat-icon-button (click)="delete(file)">
+                                                                <mat-icon color="warn">delete</mat-icon>
+                                                            </button>
+                                                            <h4 mat-line>{{file.name}}</h4>
+                
+                                                            <!-- <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar> -->
+                                                        </mat-list-item>
+                                                    </mat-list>
+                                                    <div fxLayout="row" fxLayoutAlign="end">
+                                                        <button mat-button (click)="onNoClick()">Cancel</button>
+                                                        <button mat-button (click)="submitItem(shopItemForm)" [disabled]="!shopItemForm.valid">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                    </div>
+                           
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="performances">
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-        <mat-form-field fxFlex class="large">
-            <textarea matInput placeholder="A brief description of the event" matTextareaAutosize matAutosizeMinRows="3"
-                matAutosizeMaxRows="5" formControlName="description">
-
-
-
-            </textarea>
-            <mat-error *ngIf="validation.check('description').result">
-                {{validation.check('description').message}}
-            </mat-error>
-        </mat-form-field>
-
-        <input type="hidden" formControlName="imageUrl"/>
-
-        <button mat-button (click)="fileInput.click()" color="accent">
-            <mat-icon>cloud_upload</mat-icon>
-            Upload Event Image
-        </button>
-        <input type="file" id="leaveapplication.attachment" style="display: none" class="hidden-input" (change)="onFileChange($event)"
-            accept="image/jpeg, .jpeg, image/png, .png, image/pjpeg, .jpg" #fileInput>
-        <mat-list>
-            <mat-list-item *ngFor="let file of files">
-                <button mat-icon-button (click)="delete(file)">
-                    <mat-icon color="warn">delete</mat-icon>
-                </button>
-                <h4 mat-line>{{file.name}}</h4>
-
-                <!-- <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar> -->
-            </mat-list-item>
-        </mat-list>
-        <div fxLayout="row" fxLayoutAlign="end">
-            <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-button (click)="submitItem(shopItemForm)" [disabled]="!shopItemForm.valid">
-                Save
-            </button>
-        </div>
-    </form>
+    </div>
 </div>

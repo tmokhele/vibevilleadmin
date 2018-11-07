@@ -1,4 +1,5 @@
-import { IShopItemReview } from './shop-item-review.interface';
+import { IReview } from './shop-item-review.interface';
+import { IPerformance } from './event-performance.interface';
 
 export interface IShopItem {
     _id: string;
@@ -11,7 +12,11 @@ export interface IShopItem {
     quantityInStock: number;
     rating: number;
     imageUrl: string;
-    reviews?: IShopItemReview[];
+    reviews?: IReview[];
+    vipamount?: string;
+    generalamount?: string;
+    earlyamount?: string;
+    performances?: IPerformance[];
     reviewsCount?: number;
     cartCount?: number;
 }

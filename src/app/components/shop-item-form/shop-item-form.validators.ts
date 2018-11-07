@@ -1,4 +1,4 @@
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 
 export class ShopItemFormValidators implements Validators {
     static nameValidator(control: FormControl): { [s: string]: boolean } {

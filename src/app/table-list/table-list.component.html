@@ -15,7 +15,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1">
-                <button mat-icon-button (click)="openDialog()">
+                <button  mat-icon-button matTooltip="Add Event" class="btn btn-primary" [matTooltipPosition]="'above'" (click)="openDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -48,8 +48,9 @@
                                         <th>
                                             Cover Charge
                                         </th>
+                                   
                                         <th>
-                                            Event Image
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -70,7 +71,7 @@
                                         <td class="text-primary">
                                             R{{shopItem.unitPrice}}.00
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <div *ngIf='shopItem.imageUrl'>
                                                 <button mat-icon-button (click)="previewImage(shopItem.imageUrl)">
 
@@ -84,6 +85,15 @@
                                             </div>
 
 
+                                        </td> -->
+                                       
+                                        <td>
+                                                <button mat-raised-button type="button" matTooltip="Edit Event" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
+                                                    <button mat-raised-button type="button" matTooltip="Remove Event" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                        <i class="material-icons">close</i>
+                                                    </button>
                                         </td>
                                     </tr>
                                 </tbody>

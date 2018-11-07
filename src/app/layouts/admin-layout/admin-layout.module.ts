@@ -26,7 +26,8 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatStepperModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatBadgeModule
 } from '@angular/material';
 import { FormComponent } from '../../components/shop-item-form/shop-item-form.component';
 import { LoaderService } from '../../services/loader.service';
@@ -39,6 +40,7 @@ import { UserService } from '../../services/user.service';
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     MatButtonModule,
+    MatBadgeModule,
     MatRippleModule,
     MatInputModule,
     MatCardModule,

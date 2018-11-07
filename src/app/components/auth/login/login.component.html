@@ -1,9 +1,6 @@
-<div class="content">
-  <div class="container-fluid">
+<div class="container py-5">
     <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-
+      <div class="col-md-12">
           <div class="card card-profile">
             <div class="card-avatar">
               <a href="">
@@ -30,8 +27,13 @@
                   <mat-error *ngIf="pwInput.hasError('required')">Password is required</mat-error>
                   <mat-hint *ngIf="!pwInput.touched">Should be at least 6 characters long</mat-hint>
                 </mat-form-field>
-
-                <button class="btn btn-danger btn-round" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
+                <mat-checkbox>
+                    <span class="custom-control-description small text-dark">Remember me on this computer</span>
+                </mat-checkbox>
+                <div>
+                    <button class="btn btn-danger btn-round" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
+                </div>
+              
               </form>
             </div>
           </div>
@@ -66,6 +68,6 @@
 
         </div>
       </div>
-    </div>
-  </div>
+  
+
 </div>

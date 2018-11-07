@@ -1,9 +1,12 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { VenueService } from '../../services/venue.service';
+import { IShopItem } from 'app/shared/model/shop-item.interface';
+import { AlertService } from 'app/shared/alert';
+import { AlertComponent } from 'app/alert/alert-component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -22,57 +25,84 @@ export class FormComponent implements OnInit {
         private shop: VenueService,
         public validation: ValidationService,
         private formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<FormComponent, any>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) { }
+        private alertService: AlertService,
+        public dialog: MatDialog
+    ) {
+
+    }
 
     onNoClick(): void {
-        this.dialogRef.close(null);
+
     }
 
     submitItem(form: any): void {
         if (form.valid) {
-            let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
+            const result:  IShopItem =  Object.assign({}, this.shopItemForm.value);
+            const action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(shopItem => {
-                // this is to make PhantomJS not cause the error
-                // undefined is not a constructor evaluating
-                this.dialogRef.close(shopItem);
-
+                this.alertService.success('Event added successfully')
+                const d =  this.dialog.open( AlertComponent, {
+                      width: '650px',
+                  });
+                d.afterClosed().subscribe(result => {
+                  if (result) {
+                    this.alertService.clear();
+                    this.shopItemForm.reset();
+                  }
+                })
             });
         }
     }
 
     ngOnInit(): void {
-        this.isCreateForm = this.data._id === undefined ? true : false
+        // this.isCreateForm = this.data._id === undefined ? true : false
         this.shopItemForm = this.formBuilder.group({
-            'name': [
-                this.data ? this.data.name : '',
-                Validators.compose([
-                    Validators.required,
-                    ShopItemFormValidators.nameValidator])
-            ],
+            'name': ['', Validators.compose([Validators.required, ShopItemFormValidators.nameValidator])],
             'location': [
-                this.data ? this.data.location : '',
-                Validators.required
-            ],
-            'unitPrice': [
-                this.data ? this.data.unitPrice : '',
+                '',
                 Validators.required
             ],
             'releaseDate': [
-                this.data ? this.data.releaseDate : '',
+                '',
                 Validators.required
             ],
             'category': [
-                this.data ? this.data.category : '',
+                '',
                 Validators.required
             ],
             'description': [
-                this.data ? this.data.description : ''
+                ''
+            ],
+            'earlyamount': [
+                { value: '', disabled: true },
+                Validators.compose([
+                    this.ticketValidator.bind(this)])
+            ],
+            'vipamount': [
+                { value: '', disabled: true },
+                Validators.compose([
+                    this.ticketValidator.bind(this)])
+            ],
+            'generalamount': [
+                { value: '', disabled: true },
+                Validators.compose([
+                    this.ticketValidator.bind(this)])
             ]
             ,
             'imageUrl': [
-                this.data ? this.data.imageUrl : ''
+                ''
+            ],
+            'vip': [
+                false,
+                Validators.compose([this.ticketValidator.bind(this)])
+            ],
+            'general': [
+                false,
+                Validators.compose([this.ticketValidator.bind(this)])
+            ],
+            'early': [
+                false,
+                Validators.compose([this.ticketValidator.bind(this)])
             ]
         });
 
@@ -82,34 +112,67 @@ export class FormComponent implements OnInit {
                 'name': {
                     'condition': 'invalidName',
                     'message': 'Name must start with captial letter'
+                },
+                'generalamount': {
+                    'condition': 'invalidAmount',
+                    'message': 'There should at least one ticket amount provided'
                 }
             },
             {}
         );
     }
 
+    onChange(event) {
+        if (this.shopItemForm.get('general').value === true) {
+            this.shopItemForm.get('generalamount').enable();
+        }
+        if (this.shopItemForm.get('general').value === false) {
+            this.shopItemForm.get('generalamount').setValue('')
+            this.shopItemForm.get('generalamount').disable();
+        }
+        if (this.shopItemForm.get('vip').value === true) {
+            this.shopItemForm.get('vipamount').enable();
+        }
+        if (this.shopItemForm.get('vip').value === false) {
+            this.shopItemForm.get('vipamount').setValue('')
+            this.shopItemForm.get('vipamount').disable();
+        }
+        if (this.shopItemForm.get('early').value === true) {
+            this.shopItemForm.get('earlyamount').enable();
+        }
+        if (this.shopItemForm.get('early').value === false) {
+            this.shopItemForm.get('earlyamount').setValue('')
+            this.shopItemForm.get('earlyamount').disable();
+        }
+    }
+    ticketValidator(control: FormControl): { [s: string]: boolean } {
+        if (control.value) {
+            if (this.shopItemForm.get('general').value === true
+                && this.shopItemForm.get('generalamount').value === '') {
+                return { invalidAmount: false };
+            }
+        }
+    }
     onFileChange(event) {
-        let reader = new FileReader();
+        const reader = new FileReader();
         if (event.target.files && event.target.files.length > 0) {
-            let file = event.target.files[0];
+            const file = event.target.files[0];
             reader.onloadend = (e) => {
                 // this.image = reader.result;
-                this.data.imageUrl=reader.result;
-                console.log('base 64 :'+this.data.imageUrl)
-                this.shopItemForm.controls['imageUrl'].setValue(this.data.imageUrl)
-                this.shopItemForm.get("imageUrl").setValue(this.data.imageUrl)
+                // this.data.imageUrl = reader.result;
+                this.shopItemForm.controls['imageUrl'].setValue(reader.result);
+                this.shopItemForm.get('imageUrl').setValue(reader.result)
                 this.files.add(file);
-                const data = new Blob([file], { type: "application/text" });
+                const data = new Blob([file], { type: 'application/text' });
                 const formData = new FormData();
-                formData.append("inputFile", data);
-              }
+                formData.append('inputFile', data);
+            }
             reader.readAsDataURL(file);
         };
     }
-    delete(file:File)
-    {
+    delete(file: File) {
         this.files.delete(file);
-        this.data.imageUrl='';
+        // this.data.imageUrl = '';
     }
 
 }

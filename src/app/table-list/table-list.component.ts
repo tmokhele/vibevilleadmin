@@ -4,8 +4,8 @@ import { FormComponent } from '../components/shop-item-form/shop-item-form.compo
 import { VenueService } from '../services/venue.service';
 import { Observable } from 'rxjs';
 import { IShopItem } from '../shared/model/shop-item.interface';
-import { AlertComponent } from 'app/alert/alert-component';
 import { AlertService } from 'app/shared/alert';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,10 +14,10 @@ import { AlertService } from 'app/shared/alert';
     styleUrls: ['./table-list.component.css']
 })
 export class TableListComponent implements OnInit {
-
-    constructor(public dialog: MatDialog, public venue: VenueService,public alertService:AlertService) { }
     public shopItems$: Observable<IShopItem[]>;
     public filterBy;
+    constructor(public dialog: MatDialog, public venue: VenueService, public alertService: AlertService, public router: Router) { }
+
     ngOnInit() {
         this.geEventList(null);
     }
@@ -27,37 +27,32 @@ export class TableListComponent implements OnInit {
     }
 
     openDialog(shopItem?): void {
-        let dialogRef = this.dialog.open(FormComponent, {
-            width: '650px',
-            data: {
-                _id: shopItem ? shopItem._id : undefined,
-                name: shopItem ? shopItem.name : undefined,
-                location: shopItem ? shopItem.location : undefined,
-                category: shopItem ? shopItem.category : undefined,
-                unitPrice: shopItem ? shopItem.unitPrice : undefined,
-                quantityInStock: shopItem ? shopItem.quantityInStock : undefined,
-                releaseDate: shopItem ? shopItem.releaseDate : undefined,
-                description: shopItem ? shopItem.description : undefined,
-                imageUrl: shopItem ? shopItem.imageUrl : undefined,
-            }
-        });
+        this.router.navigate(['/event']);
+        // const dialogRef = this.dialog.open(FormComponent, {
+        //     width: '650px',
+        //     data: {
+        //         _id: shopItem ? shopItem._id : undefined,
+        //         name: shopItem ? shopItem.name : undefined,
+        //         location: shopItem ? shopItem.location : undefined,
+        //         category: shopItem ? shopItem.category : undefined,
+        //         unitPrice: shopItem ? shopItem.unitPrice : undefined,
+        //         quantityInStock: shopItem ? shopItem.quantityInStock : undefined,
+        //         releaseDate: shopItem ? shopItem.releaseDate : undefined,
+        //         description: shopItem ? shopItem.description : undefined,
+        //         imageUrl: shopItem ? shopItem.imageUrl : undefined,
+        //         reviews: shopItem ? shopItem.reviews : [],
+        //         performances: shopItem ? shopItem.performances : []
+        //     }
+        // });
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.shopItems$ = this.venue.getShopItems();
-            }
-        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //         this.shopItems$ = this.venue.getShopItems();
+        //     }
+        // });
     }
 
     previewImage(imgUrl: any) {
-        this.alertService.error("Testing")
-      let d =  this.dialog.open(AlertComponent,{
-            width: '650px',
-        });
-
-      d.afterClosed().subscribe(result =>{
-          this.alertService.clear();
-      })
 
     }
 

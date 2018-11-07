@@ -1,8 +1,7 @@
-import { Injectable, ErrorHandler, Injector } from "@angular/core";
-import { Router } from "@angular/router";
-import { AlertService } from "./alert";
-import { AlertComponent } from "app/alert/alert-component";
-import { MatDialog } from "@angular/material/dialog";
+import { Injectable, ErrorHandler, Injector } from '@angular/core';
+import { AlertService } from './alert';
+import { AlertComponent } from 'app/alert/alert-component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -16,8 +15,8 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     handleError(error: any): void {
         const alertService = this.injector.get(AlertService);
-        alertService.warn(error.error.error + ': for request' +error.error.path+'')
-        let d = this.dialog.open(AlertComponent, {
+        alertService.warn(error.error.message + ': for request' + error.error.path + '')
+        const d = this.dialog.open(AlertComponent, {
             width: '450px',
         });
 

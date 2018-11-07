@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher, MatStepper } from '@angular/material';
+import { ErrorStateMatcher, MatStepper, MatDialog } from '@angular/material';
 import { UserService } from '../services/user.service';
 import { IUserItem } from 'app/shared/model/user-item.interface';
+import { AlertService } from 'app/shared/alert';
+import { AlertComponent } from 'app/alert/alert-component';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -20,13 +22,17 @@ export class TypographyComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   matcher = new MyErrorStateMatcher();
-  user:IUserItem;
+  user: IUserItem;
+  userInfo: { name: string, surname: string, contactNumber: string,  emailAddress: string, role: string, info: boolean
+    , twitter: boolean, faceBook: boolean, isEvents: boolean}
+  = { name: '', surname: '', contactNumber: '', emailAddress: '', role: 'invalid', info: false,
+   twitter: false , faceBook: false, isEvents: false};
 
-  @ViewChild("search")
+  @ViewChild('search')
   public searchElementRef: ElementRef;
-  constructor(private _formBuilder: FormBuilder,private userService:UserService) { }
-  userInfo: { name: string, surname: string, contactNumber: string,  emailAddress: string, role: string, info: boolean, twitter: boolean,faceBook:boolean,isEvents:boolean}
-  = { name: '', surname: '', contactNumber: '', emailAddress: '', role: 'invalid', info: false, twitter: false ,faceBook:false,isEvents:false};
+  constructor(public dialog: MatDialog, private _formBuilder: FormBuilder,
+    private userService: UserService, public alertService: AlertService) { }
+
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       surname: ['', Validators.required],
@@ -36,18 +42,29 @@ export class TypographyComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       role : ['invalid', Validators.required],
-      info:[false],
-      twitter:[false],
-      faceBook:[false],
-      events:[false]
+      info: [false],
+      twitter: [false],
+      faceBook: [false],
+      events: [false]
     });
 
   }
 
   saveForm(stepper: MatStepper) {
     this.user = this.userInfo;
-    this.userService.addUser(this.user).subscribe(result =>{
-      stepper.reset();
+    this.userService.addUser(this.user).subscribe(result => {
+      this.alertService.success('User created successfully')
+      const d =  this.dialog.open( AlertComponent, {
+            width: '650px',
+        });
+
+      d.afterClosed().subscribe(result => {
+        if (result) {
+          stepper.reset();
+          this.alertService.clear();
+        }
+      })
+
     })
   }
 

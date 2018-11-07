@@ -18,7 +18,8 @@ import { AuthGuard } from './shared/guards/auth-guard';
 import { AuthService } from './components/auth/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
-import { MatInputModule, MatCardModule, MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule } from '@angular/material';
+import { MatInputModule, MatCardModule,
+  MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { ValidationService } from './components/shop-item-form/form-validation.service';
 import { VenueService } from './services/venue.service';
 import { RequestInterceptor } from './components/auth/request.interceptor';
@@ -40,6 +41,7 @@ import { GlobalErrorHandler } from './shared/global-error-handler';
     MatInputModule,
     MatCardModule,
     MatDialogModule,
+    MatCheckboxModule,
     MatIconModule,
     MatTooltipModule,
     ReactiveFormsModule,

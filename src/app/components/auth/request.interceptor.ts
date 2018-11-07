@@ -9,16 +9,16 @@ import { GlobalErrorHandler } from 'app/shared/global-error-handler';
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
   constructor(public auth: AuthService, private loaderService: LoaderService
-    ,private router: Router,private errorHandler:GlobalErrorHandler) { }
+    , private router: Router, private errorHandler: GlobalErrorHandler) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     console.log('intercepted request ... ');
-    let url = 'http://52.14.223.190:8086/api/'+req.url;
-    // var url ='http://localhost:8086/api/'+req.url;
+    // let url = 'http://52.14.223.190:8086/api/'+req.url;
+    var url ='http://localhost:8087/api/'+req.url;
     const token = this.auth.getToken();
     const authReq = req.clone({
-      url:url,
+      url: url,
       setHeaders:
       {
         'Authorization': `Bearer `+token,

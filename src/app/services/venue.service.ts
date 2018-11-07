@@ -10,9 +10,9 @@ import { Observable } from 'rxjs/Observable';
 
 
 import { IShopService } from '../contracts/shop-service.interface';
-import { IShopItem } from "../shared/model/shop-item.interface";
-import { IShopItemReview } from "../shared/model/shop-item-review.interface";
-import { ICartItem } from "../shared/model/cart-item.interface";
+import { IShopItem } from '../shared/model/shop-item.interface';
+import { IReview } from '../shared/model/shop-item-review.interface';
+import { ICartItem } from '../shared/model/cart-item.interface';
 import { AuthService } from '../components/auth/auth.service';
 import { CustomError } from '../error/custom-error';
 
@@ -28,7 +28,7 @@ export class VenueService implements IShopService {
         private http: HttpClient,
         private auth: AuthService
     ) {
-        
+
     }
 
     getShopItems(userId?: string): Observable<IShopItem[]> {
@@ -37,9 +37,9 @@ export class VenueService implements IShopService {
         if (userId) {
             url = url + '/' + userId;
         }
-           let headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
+           const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
         const network$ = this.http
-            .get<IShopItem[]>(url,{headers: headers})
+            .get<IShopItem[]>(url, {headers: headers})
             .publishReplay(1, 5000)
             .refCount();
 
@@ -60,7 +60,6 @@ export class VenueService implements IShopService {
     }
 
     addShopItem(body: any): Observable<IShopItem> {
-        console.log('adding event: '+JSON.stringify(body))
         return this.http.post<IShopItem>('event', body)
     }
 
@@ -68,8 +67,8 @@ export class VenueService implements IShopService {
         return this.http.put<IShopItem>('event', body)
     }
 
-    setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IShopItemReview> {
-        let body: any = {
+    setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IReview> {
+        const body: any = {
             'itemId': itemId,
             'userId': this.auth.authenticatedUserId,
             'reviewDate': moment().format('LLL'),
@@ -77,7 +76,7 @@ export class VenueService implements IShopService {
             'rating': rating
         };
 
-        return this.http.post<IShopItemReview>('review', body)
+        return this.http.post<IReview>('review', body)
     }
 
     refreshCartCountFor(cartItem: ICartItem) {

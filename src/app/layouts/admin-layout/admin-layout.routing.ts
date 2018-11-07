@@ -9,6 +9,7 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { AuthGuard } from '../../shared/guards/auth-guard';
+import { FormComponent } from 'app/components/shop-item-form/shop-item-form.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -53,12 +54,13 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard',      component: DashboardComponent ,canActivate:[AuthGuard]},
-    { path: 'user-profile',   component: UserProfileComponent,canActivate:[AuthGuard] },
-    { path: 'venue',     component: TableListComponent,canActivate:[AuthGuard] },
-    { path: 'typography',     component: TypographyComponent ,canActivate:[AuthGuard]},
-    { path: 'icons',          component: IconsComponent ,canActivate:[AuthGuard]},
-    { path: 'maps',           component: MapsComponent ,canActivate:[AuthGuard]},
-    { path: 'notifications',  component: NotificationsComponent ,canActivate:[AuthGuard]},
-    { path: 'upgrade',        component: UpgradeComponent ,canActivate:[AuthGuard]},
+    { path: 'dashboard',      component: DashboardComponent , canActivate: [AuthGuard]},
+    { path: 'user-profile',   component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'venue',     component: TableListComponent, canActivate: [AuthGuard] },
+    { path: 'addUser',     component: TypographyComponent , canActivate: [AuthGuard]},
+    { path: 'icons',          component: IconsComponent , canActivate: [AuthGuard]},
+    { path: 'maps',           component: MapsComponent , canActivate: [AuthGuard]},
+    { path: 'event',           component: FormComponent , canActivate: [AuthGuard]},
+    { path: 'notifications',  component: NotificationsComponent , canActivate: [AuthGuard]},
+    { path: 'logout',        component: UpgradeComponent , canActivate: [AuthGuard]},
 ];

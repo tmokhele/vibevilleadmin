@@ -2,11 +2,11 @@
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AngularFireAuth } from "angularfire2/auth";
-import { BehaviorSubject } from "rxjs";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment/moment';
-import { JwtHelper, tokenNotExpired } from "angular2-jwt";
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { TokenData } from '../../shared/model/token-data.model';
 import { User } from '../../shared/model/user.model';
 import { AuthData } from '../../shared/model/auth-data.model';
@@ -20,7 +20,7 @@ const TOKEN_KEY = 'token'
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-  user: User = { username: "" };
+  user: User = { username: '' };
   private subject = new BehaviorSubject(UNKNOWN_USER);
 
   constructor(private router: Router, public http: HttpClient) {
@@ -38,7 +38,7 @@ export class AuthService {
 
         this.user.username = authData.username;
         localStorage.setItem(TOKEN_KEY, success.accessToken)
-        localStorage.setItem('currentUser',authData.username);
+        localStorage.setItem('currentUser', authData.username);
         this.subject.next({ 'username': authData.username })
         this.authSuccessfully();
       }
@@ -48,7 +48,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     this.subject.next(UNKNOWN_USER);
-    this.user = null;
+    this.user  = { username: '' };
     this.authChange.next(false);
     this.router.navigate(['/login']);
   }
@@ -86,12 +86,11 @@ export class AuthService {
 
   public getToken(): any {
     const token = localStorage.getItem(TOKEN_KEY);
-    if (token != 'undefined') {
-      // return token ? jwtHelper.decodeToken(token) : null
-      return token;
-    } else {
-      return null;
+
+    if (token != null && !jwtHelper.isTokenExpired(token)) {
+        return token;
     }
+   return null;
 
   }
 

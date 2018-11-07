@@ -1,4 +1,4 @@
-export interface IShopItemReview {
+export interface IReview {
     _id: string;
     itemId: string;
     userId: string;
