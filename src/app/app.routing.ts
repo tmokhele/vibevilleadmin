@@ -6,9 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './components/auth/auth.guard';
 import { LoginComponent } from './components/auth/login/login.component';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 
-const routes: Routes =[
+const routes: Routes =
+[
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegistrationComponent },
   {
     path: '',
     redirectTo: 'login',

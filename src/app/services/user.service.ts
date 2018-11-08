@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { IUserService } from "../contracts/user-service.interface";
-import { Observable, BehaviorSubject } from "rxjs";
-import { IUserItem } from "../shared/model/user-item.interface";
+import { Injectable } from '@angular/core';
+import { IUserService } from '../contracts/user-service.interface';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { IUserItem } from '../shared/model/user-item.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CustomError } from "app/error/custom-error";
+import { CustomError } from 'app/error/custom-error';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -15,7 +15,7 @@ export class UserService implements IUserService {
 
     }
     deleteUser(userId: string): boolean {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     getUsers(): Observable<IUserItem[]> {
         const network = this.http.get<IUserItem[]>('/').publishReplay(1, 5000)
@@ -34,14 +34,16 @@ export class UserService implements IUserService {
     }
 
     getUser(userId: string): Observable<IUserItem> {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     addUser(data: any): Observable<IUserItem> {
-        console.log('user being added: '+JSON.stringify(data))
         return this.http.post<IUserItem>('user', data)
     }
+    registerUser(data: any): Observable<IUserItem> {
+        return this.http.post<IUserItem>('register', data)
+    }
     editUser(IUserItem: any): Observable<IUserItem> {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
 }

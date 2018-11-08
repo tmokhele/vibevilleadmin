@@ -27,6 +27,7 @@ import { LoaderService } from './services/loader.service';
 import { AlertComponent } from './alert/alert-component';
 import { AlertService } from './shared/alert';
 import { GlobalErrorHandler } from './shared/global-error-handler';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 
 @NgModule({
   imports: [
@@ -46,14 +47,15 @@ import { GlobalErrorHandler } from './shared/global-error-handler';
     MatTooltipModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+      apiKey: 'AIzaSyC3bXqL1zR_p1tmvSK5J1m9sIZtS0rvGao'
     })
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    RegistrationComponent
 
   ],
 

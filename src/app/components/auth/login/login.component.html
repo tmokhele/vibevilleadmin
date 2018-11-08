@@ -1,44 +1,67 @@
 <div class="container py-5">
-    <div class="row">
-      <div class="col-md-12">
-          <div class="card card-profile">
-            <div class="card-avatar">
-              <a href="">
-                <img class="img" src="../../../../assets/img/logo.jpg" />
-              </a>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-profile">
+        <div class="card-avatar">
+          <a href="">
+            <img class="img" src="../../../../assets/img/logo.jpg" />
+          </a>
+        </div>
+        <div class="card-body">
+          <h4 class="card-category text-gray">Login</h4>
+          <h6 class="card-title">Event Admininstration Portal</h6>
+
+          <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+
+            <mat-form-field class="small">
+              <mat-icon matPrefix>account_circle</mat-icon>
+              <input matInput placeholder="Enter Username" ngModel autocomplete="off" name="email" required>
+              <mat-error>Username is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-icon matPrefix>lock</mat-icon>
+              <input type="password" matInput placeholder="Enter Password" ngModel name="password" required
+                autocomplete="off" minlength="6" #pwInput="ngModel">
+              <mat-error *ngIf="pwInput.hasError('minlength')">Password too short</mat-error>
+              <mat-error *ngIf="pwInput.hasError('required')">Password is required</mat-error>
+              <mat-hint *ngIf="!pwInput.touched">Should be at least 6 characters long</mat-hint>
+            </mat-form-field>
+
+            <li class="m-b-8">
+                <span class="txt1">
+                  Forgot
+                </span>
+  
+                <a href="/reset" class="txt2">
+                  Username / Password?
+                </a>
+              </li>
+  
+
+            <li>
+                <span class="txt1">
+                  Don’t have an account?
+                </span>
+  
+                <a href="/register" class="txt2">
+                  Sign up
+                </a>
+              </li>
+
+            <div class="card-footer">
+              <mat-checkbox>
+                <span class="custom-control-description small text-dark">Remember me on this computer</span>
+              </mat-checkbox>
+              <button class="btn btn-danger btn-round" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
+
             </div>
-            <div class="card-body">
-              <h4 class="card-category text-gray">Login</h4>
-              <h6 class="card-title">Admin Portal Login</h6>
 
-              <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+          </form>
+        </div>
+      </div>
 
-                <mat-form-field>
-                  <mat-icon matPrefix>account_circle</mat-icon>
-                  <input matInput placeholder="Enter Username" ngModel autocomplete="off" name="email" required>
-                  <mat-error>Username is required</mat-error>
-                </mat-form-field>
-
-                <mat-form-field>
-                  <mat-icon matPrefix>lock</mat-icon>
-                  <input type="password" matInput placeholder="Enter Password" ngModel name="password" required
-                    autocomplete="off" minlength="6" #pwInput="ngModel">
-                  <mat-error *ngIf="pwInput.hasError('minlength')">Password too short</mat-error>
-                  <mat-error *ngIf="pwInput.hasError('required')">Password is required</mat-error>
-                  <mat-hint *ngIf="!pwInput.touched">Should be at least 6 characters long</mat-hint>
-                </mat-form-field>
-                <mat-checkbox>
-                    <span class="custom-control-description small text-dark">Remember me on this computer</span>
-                </mat-checkbox>
-                <div>
-                    <button class="btn btn-danger btn-round" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
-                </div>
-              
-              </form>
-            </div>
-          </div>
-
-          <!-- <div class="card-header card-header-rose">
+      <!-- <div class="card-header card-header-rose">
             <h4 class="card-title">Login</h4>
             <p class="card-category">Please provide valid username and password</p>
           </div>
@@ -66,8 +89,8 @@
           </div> -->
 
 
-        </div>
-      </div>
-  
+    </div>
+  </div>
+
 
 </div>
