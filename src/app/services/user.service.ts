@@ -40,7 +40,7 @@ export class UserService implements IUserService {
         return this.http.post<IUserItem>('user', data)
     }
     registerUser(data: any): Observable<IUserItem> {
-        return this.http.post<IUserItem>('register', data)
+        return this.http.post<IUserItem>('auth/register', data)
     }
     editUser(IUserItem: any): Observable<IUserItem> {
         throw new Error('Method not implemented.');

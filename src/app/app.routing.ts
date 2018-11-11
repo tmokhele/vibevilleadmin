@@ -7,11 +7,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthGuard } from './components/auth/auth.guard';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
+import { PasswordResetComponent } from './components/auth/passwordreset/passwordreset.component';
 
 const routes: Routes =
 [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
+  {path: 'reset', component: PasswordResetComponent},
   {
     path: '',
     redirectTo: 'login',

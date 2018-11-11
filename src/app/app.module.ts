@@ -19,7 +19,7 @@ import { AuthService } from './components/auth/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MatInputModule, MatCardModule,
-  MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
+  MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule, MatCheckboxModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { ValidationService } from './components/shop-item-form/form-validation.service';
 import { VenueService } from './services/venue.service';
 import { RequestInterceptor } from './components/auth/request.interceptor';
@@ -28,6 +28,8 @@ import { AlertComponent } from './alert/alert-component';
 import { AlertService } from './shared/alert';
 import { GlobalErrorHandler } from './shared/global-error-handler';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
+import { PasswordResetComponent } from './components/auth/passwordreset/passwordreset.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { RegistrationComponent } from './components/auth/registration/registrati
     AppRoutingModule,
     MatInputModule,
     MatCardModule,
+    MatOptionModule,
+    MatSelectModule,
     MatDialogModule,
     MatCheckboxModule,
     MatIconModule,
@@ -55,7 +59,8 @@ import { RegistrationComponent } from './components/auth/registration/registrati
     AdminLayoutComponent,
     LoginComponent,
     AlertComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    PasswordResetComponent
 
   ],
 
@@ -68,6 +73,7 @@ import { RegistrationComponent } from './components/auth/registration/registrati
     VenueService,
     LoaderService,
     GlobalErrorHandler,
+    UserService,
     AlertService,
     {
       provide: HTTP_INTERCEPTORS,

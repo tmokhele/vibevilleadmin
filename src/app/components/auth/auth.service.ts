@@ -53,15 +53,6 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  /**
-   * Get current user.
-   *
-   * We use the object-spread operator [...].
-   * Since this is an object [reference type] other parts of the application can
-   * easily change this particular object.
-   *
-   * We don't want that - so we return a copy of the object as opposed to the actual one here.
-   */
   getUser() {
     return { ...this.user };
   }

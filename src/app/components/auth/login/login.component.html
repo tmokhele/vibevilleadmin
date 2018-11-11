@@ -60,35 +60,6 @@
           </form>
         </div>
       </div>
-
-      <!-- <div class="card-header card-header-rose">
-            <h4 class="card-title">Login</h4>
-            <p class="card-category">Please provide valid username and password</p>
-          </div>
-
-          <div class="card-body">
-            <form  #form="ngForm" (ngSubmit)="onSubmit(form)">
-
-              <mat-form-field>
-                <mat-icon matPrefix>account_circle</mat-icon>
-                <input matInput placeholder="Enter Username" ngModel autocomplete="off" name="email" required>
-                <mat-error>Username is required</mat-error>
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-icon matPrefix>lock</mat-icon>
-                <input type="password" matInput placeholder="Enter Password" ngModel name="password" required
-                  autocomplete="off" minlength="6" #pwInput="ngModel">
-                <mat-error *ngIf="pwInput.hasError('minlength')">Password too short</mat-error>
-                <mat-error *ngIf="pwInput.hasError('required')">Password is required</mat-error>
-                <mat-hint *ngIf="!pwInput.touched">Should be at least 6 characters long</mat-hint>
-              </mat-form-field>
-
-              <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
-            </form>
-          </div> -->
-
-
     </div>
   </div>
 
