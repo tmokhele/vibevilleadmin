@@ -12,8 +12,6 @@ import { PasswordResetComponent } from './components/auth/passwordreset/password
 const routes: Routes =
 [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegistrationComponent },
-  {path: 'reset', component: PasswordResetComponent},
   {
     path: '',
     redirectTo: 'login',
@@ -25,7 +23,9 @@ const routes: Routes =
         {
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-  }]}
+  }],
+}, { path: 'register', component: RegistrationComponent },
+{path: 'reset', component: PasswordResetComponent}
 ];
 
 @NgModule({
