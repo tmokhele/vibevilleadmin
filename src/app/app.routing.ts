@@ -16,7 +16,18 @@ const routes: Routes =
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-  }, {
+  },
+  {
+    path: 'register',
+    redirectTo: 'register',
+    pathMatch: 'full',
+  },
+  {
+    path: 'reset',
+    redirectTo: 'reset',
+    pathMatch: 'full',
+  },
+   {
     path: '',
     component: AdminLayoutComponent,
     children: [
