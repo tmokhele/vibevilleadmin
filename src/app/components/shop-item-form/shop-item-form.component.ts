@@ -44,7 +44,8 @@ export class FormComponent implements OnInit {
                 const d =  this.dialog.open( AlertComponent, {
                       width: '650px',
                   });
-                d.afterClosed().subscribe(result => {
+                // tslint:disable-next-line:no-shadowed-variable
+                d.afterClosed().subscribe( result => {
                   if (result) {
                     this.alertService.clear();
                     this.shopItemForm.reset();

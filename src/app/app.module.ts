@@ -19,7 +19,8 @@ import { AuthService } from './components/auth/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MatInputModule, MatCardModule,
-  MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule, MatCheckboxModule, MatOptionModule, MatSelectModule } from '@angular/material';
+  MatIconModule, MatTooltipModule, MatDialogModule, MatButtonModule, MatCheckboxModule,
+   MatOptionModule, MatSelectModule } from '@angular/material';
 import { ValidationService } from './components/shop-item-form/form-validation.service';
 import { VenueService } from './services/venue.service';
 import { RequestInterceptor } from './components/auth/request.interceptor';

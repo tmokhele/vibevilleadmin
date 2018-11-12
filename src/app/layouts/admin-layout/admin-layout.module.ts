@@ -68,7 +68,7 @@ import { UserService } from '../../services/user.service';
     ShopItemFilterPipe,
     FormComponent
   ],
-  providers: [LoaderService,UserService]
+  providers: [LoaderService, UserService]
   , entryComponents: [
     FormComponent
 ]

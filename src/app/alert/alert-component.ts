@@ -7,14 +7,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'alert',
     templateUrl: './alert.component.html'
 })
 export class AlertComponent {
     alerts: Alert[] = [];
- 
     constructor(private alertService: AlertService) { }
- 
+
+    // tslint:disable-next-line:use-life-cycle-interface
     ngOnInit() {
 
         this.alertService.subject.subscribe((alert: Alert) => {
@@ -22,22 +23,19 @@ export class AlertComponent {
                 this.alerts = [];
                 return;
             }
- 
-            // add alert to array
             this.alerts.push(alert);
         });
     }
- 
+
     removeAlert(alert: Alert) {
         this.alerts = this.alerts.filter(x => x !== alert);
     }
- 
+
     cssClass(alert: Alert) {
         if (!alert) {
             return;
         }
- 
-        // return css class based on alert type
+
         switch (alert.type) {
             case AlertType.Success:
                 return 'alert alert-success';
