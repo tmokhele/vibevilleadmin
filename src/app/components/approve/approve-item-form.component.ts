@@ -25,10 +25,9 @@ export class ApproveComponent implements OnInit {
     }
 
     approve(auth: AuthData) {
-        this.userService.authSubject.next(auth);
     }
 
-    decline() {
+    decline(auth: AuthData) {
     }
 
 }

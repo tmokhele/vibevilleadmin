@@ -6,15 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CustomError } from 'app/error/custom-error';
 import { AuthData } from 'app/shared/model/auth-data.model';
 
-const UNKNOWN_USER: AuthData = {
-    username: undefined,
-    password: undefined
-  }
-
 @Injectable()
 export class UserService implements IUserService {
-    public authSubject = new BehaviorSubject<AuthData>(UNKNOWN_USER)
-    public authItem: Observable<AuthData> = this.authSubject.asObservable()
     private subject = new BehaviorSubject<IUserItem[]>([])
     public userItems$: Observable<IUserItem[]> = this.subject.asObservable()
     public registrationSubject = new BehaviorSubject<AuthData[]>([])
