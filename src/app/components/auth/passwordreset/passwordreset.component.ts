@@ -59,6 +59,7 @@ export class PasswordResetComponent implements OnInit {
       d.afterClosed().subscribe(result => {
         if (result) {
           this.alertService.clear();
+          this.userDetailsForm.reset();
           // this.authService.login({
           //   username:  result.email,
           //   password: result.password

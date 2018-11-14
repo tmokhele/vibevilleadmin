@@ -33,6 +33,7 @@ import { FormComponent } from '../../components/shop-item-form/shop-item-form.co
 import { LoaderService } from '../../services/loader.service';
 import { ShopItemFilterPipe } from '../../shared/model/shop-item-filter.pipe';
 import { UserService } from '../../services/user.service';
+import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { UserService } from '../../services/user.service';
     NotificationsComponent,
     UpgradeComponent,
     ShopItemFilterPipe,
-    FormComponent
+    FormComponent,
+    ApproveComponent
   ],
   providers: [LoaderService, UserService]
   , entryComponents: [

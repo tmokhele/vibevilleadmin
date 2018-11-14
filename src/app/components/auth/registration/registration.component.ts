@@ -54,24 +54,27 @@ export class RegistrationComponent implements OnInit {
         Validators.minLength(5),
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-     ])),
-     confirm_password: ['', Validators.required]
+      ])),
+      confirm_password: ['', Validators.required]
     }, {
-      validator: PasswordValidation.MatchPassword
-    });
+        validator: PasswordValidation.MatchPassword
+      });
   }
 
   onSubmitUserDetails(form: any) {
+    this.userService.registerUser(form).subscribe(response => {
       // tslint:disable-next-line:max-line-length
       this.alertService.success('Login details request is successful. You will receive an e-mail from the system adminstrator regarding the status of your request')
-      const d =  this.dialog.open( AlertComponent, {
-            width: '650px',
-        });
+      const d = this.dialog.open(AlertComponent, {
+        width: '650px',
+      });
       d.afterClosed().subscribe(result => {
         if (result) {
           this.alertService.clear();
+          this.userDetailsForm.reset();
         }
       })
+    });
   }
 
   cancelRegistration() {

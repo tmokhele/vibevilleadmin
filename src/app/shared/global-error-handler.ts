@@ -15,9 +15,9 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     handleError(error: any): void {
         const alertService = this.injector.get(AlertService);
-        alertService.warn(error.error.message + ': for request' + error.error.path + '')
+        alertService.error('System Error: ' + error.error.message)
         const d = this.dialog.open(AlertComponent, {
-            width: '450px',
+            width: '500px',
         });
 
         d.afterClosed().subscribe(result => {

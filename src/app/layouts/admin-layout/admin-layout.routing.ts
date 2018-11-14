@@ -10,50 +10,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { AuthGuard } from '../../shared/guards/auth-guard';
 import { FormComponent } from 'app/components/shop-item-form/shop-item-form.component';
+import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
 
 export const AdminLayoutRoutes: Routes = [
-    // {
-    //   path: '',
-    //   children: [ {
-    //     path: 'dashboard',
-    //     component: DashboardComponent
-    // }]}, {
-    // path: '',
-    // children: [ {
-    //   path: 'userprofile',
-    //   component: UserProfileComponent
-    // }]
-    // }, {
-    //   path: '',
-    //   children: [ {
-    //     path: 'icons',
-    //     component: IconsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'notifications',
-    //         component: NotificationsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'maps',
-    //         component: MapsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'typography',
-    //         component: TypographyComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'upgrade',
-    //         component: UpgradeComponent
-    //     }]
-    // }
     { path: 'dashboard',      component: DashboardComponent , canActivate: [AuthGuard]},
     { path: 'user-profile',   component: UserProfileComponent, canActivate: [AuthGuard] },
     { path: 'venue',     component: TableListComponent, canActivate: [AuthGuard] },
@@ -62,5 +21,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent , canActivate: [AuthGuard]},
     { path: 'event',           component: FormComponent , canActivate: [AuthGuard]},
     { path: 'notifications',  component: NotificationsComponent , canActivate: [AuthGuard]},
+    { path: 'approve',  component: ApproveComponent , canActivate: [AuthGuard]},
     { path: 'logout',        component: UpgradeComponent , canActivate: [AuthGuard]},
 ];

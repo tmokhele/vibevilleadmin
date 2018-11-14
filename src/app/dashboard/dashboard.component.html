@@ -7,15 +7,18 @@
                         <div class="card-icon">
                             <i class="material-icons">people</i>
                         </div>
-                        <p class="card-category">Registered Users</p>
-                        <h3 class="card-title">50
-                            <!-- <small>GB</small> -->
-                        </h3>
+                        <p class="card-category">Registration Request</p>
+                        <div *ngIf="(registrationRequests$ | async) as regItems">
+                            <h3 class="card-title">{{regItems.length}}
+                                <!-- <small>GB</small> -->
+                            </h3>
+                        </div>
+                  
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-danger">info</i>
-                            <a href="#pablo">Get More Space...</a>
+                        <div *ngIf="(registrationRequests$ | async) as regItems" class="stats">
+                            <i class="material-icons text-info">people</i>
+                            <button class="btn btn-link p-0" type="button" style="cursor: pointer"(click)="approveRequests()">Approve Requests</button>
                         </div>
                     </div>
                 </div>
