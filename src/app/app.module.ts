@@ -31,6 +31,7 @@ import { GlobalErrorHandler } from './shared/global-error-handler';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { PasswordResetComponent } from './components/auth/passwordreset/passwordreset.component';
 import { UserService } from './services/user.service';
+import { ConfirmationDialogComponent } from './alert/delete-component';
 
 @NgModule({
   imports: [
@@ -61,12 +62,14 @@ import { UserService } from './services/user.service';
     LoginComponent,
     AlertComponent,
     RegistrationComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    ConfirmationDialogComponent
 
   ],
 
   entryComponents: [
-    AlertComponent
+    AlertComponent,
+    ConfirmationDialogComponent
 ],
   providers: [AuthGuard,
     AuthService,

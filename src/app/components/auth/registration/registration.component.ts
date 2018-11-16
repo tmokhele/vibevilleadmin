@@ -15,12 +15,13 @@ import { PasswordValidation } from 'app/shared/passwordvalidator';
 })
 export class RegistrationComponent implements OnInit {
   validation_messages = {
-    'username': [
-      { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 25 characters long' },
-      { type: 'pattern', message: 'Your username must contain only numbers and letters' },
-      { type: 'validUsername', message: 'Your username has already been taken' }
+    'name': [
+      { type: 'required', message: 'First Name is required' },
+      { type: 'pattern', message: 'Your name must contain only  letters' }
+    ],
+    'surname': [
+      { type: 'required', message: 'Surname is required' },
+      { type: 'pattern', message: 'Your surname must contain only  letters' }
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
@@ -46,6 +47,14 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.userDetailsForm = this.formBuilder.group({
+      name: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z \-\']+')
+      ])),
+      surname: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z \-\']+')
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -71,7 +80,7 @@ export class RegistrationComponent implements OnInit {
       d.afterClosed().subscribe(result => {
         if (result) {
           this.alertService.clear();
-          this.userDetailsForm.reset();
+          this.router.navigate(['/login']);
         }
       })
     });

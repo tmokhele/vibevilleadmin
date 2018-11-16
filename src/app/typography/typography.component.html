@@ -15,16 +15,16 @@
                   <mat-card-content>
                     <div fxLayout="column wrap" fxLayoutGap="25px" fxLayoutGap.xs="0">
                       <mat-form-field fxFlex="25">
-                        <input matInput [(ngModel)]="userInfo.name" placeholder="First name" formControlName="name" required>
+                        <input matInput [(ngModel)]="userInfo.name" placeholder="First name" formControlName="name" >
                       </mat-form-field>
                       <mat-form-field fxFlex="25">
-                        <input matInput [(ngModel)]="userInfo.surname" placeholder="Last name" formControlName="surname" required>
+                        <input matInput [(ngModel)]="userInfo.surname" placeholder="Last name" formControlName="surname" >
                       </mat-form-field>
                       <mat-form-field fxFlex="25">
                         <input matInput [(ngModel)]="userInfo.emailAddress" placeholder="Email Address" formControlName="emailAddress" required>
                       </mat-form-field>
                       <mat-form-field fxFlex="25">
-                        <input matInput [(ngModel)]="userInfo.contactNumber" placeholder="Contact Number" minlength="10" formControlName="contactNumber" required>
+                        <input matInput [(ngModel)]="userInfo.contactNumber" placeholder="Contact Number" minlength="10" formControlName="contactNumber" >
                       </mat-form-field>
                     </div>
                   </mat-card-content>

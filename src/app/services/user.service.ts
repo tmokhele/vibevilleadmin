@@ -17,8 +17,8 @@ export class UserService implements IUserService {
     ) {
 
     }
-    deleteUser(userId: string): boolean {
-        throw new Error('Method not implemented.');
+    deleteUser(request: any):  Observable<AuthData> {
+       return this.http.post<AuthData>('user/remove', request)
     }
     getUsers(): Observable<IUserItem[]> {
         const network = this.http.get<IUserItem[]>('/').publishReplay(1, 5000)

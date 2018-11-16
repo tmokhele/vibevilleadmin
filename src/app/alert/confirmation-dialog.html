@@ -1,0 +1,15 @@
+<div mat-dialog-title>
+    <h4>Confirm</h4>
+
+</div>
+<div mat-dialog-content>
+    <div  class="warn">
+        {{confirmMessage}}
+    </div>
+</div>
+<mat-dialog-actions align="end">
+
+        <button class="btn btn-danger btn-round"(click)="dialogRef.close(true)">Confirm</button>
+        <button class="btn btn-info btn-round" (click)="dialogRef.close(false)">Cancel</button>
+
+</mat-dialog-actions>

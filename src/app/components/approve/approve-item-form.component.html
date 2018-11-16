@@ -13,6 +13,12 @@
                                 <thead class=" text-primary">
                                     <tr>
                                         <th>
+                                            Requestors Name
+                                        </th>
+                                        <th>
+                                            Requestors Surname
+                                        </th>
+                                        <th>
                                             Email
                                         </th>
                                         <th>
@@ -26,20 +32,26 @@
 
                                 <tbody *ngFor='let regRequest of registrationItems'>
                                     <tr>
+                                        <td>
+                                            {{regRequest.name}}
+                                        </td>
+                                        <td>
+                                            {{regRequest.surname}}
+                                        </td>
 
                                         <td>
                                             {{regRequest.email}}
                                         </td>
 
                                         <td>
-                                            <button mat-raised-button type="button" matTooltip="Approve Request" (click)="approve(regRequest)"
-                                                [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                            <button mat-raised-button type="button" matTooltip="Approve Request"
+                                                (click)="approve(regRequest)" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
                                                 <i class="material-icons">verified_user</i>
                                             </button>
                                         </td>
                                         <td>
-                                            <button mat-raised-button type="button" matTooltip="Decline Request" (click)="decline(regRequest)"
-                                                [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <button mat-raised-button type="button" matTooltip="Decline Request"
+                                                (click)="decline(regRequest)" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
                                                 <i class="material-icons">person_add_disabled</i>
                                             </button>
                                         </td>

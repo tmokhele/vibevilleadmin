@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.login({
         username:  form.form.value.email,
-        password: form.form.value.password
+        password: form.form.value.password,
+        name: ' ',
+        surname: ' '
       });
     }, 4000);
 

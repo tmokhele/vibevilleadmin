@@ -31,9 +31,8 @@ export class AuthService {
 
   login(authData: AuthData) {
 
-    let headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
-    let url ="auth/signin"
-    this.http.post(url,authData,{headers: headers}).subscribe
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
+    this.http.post('auth/signin', authData, {headers: headers}).subscribe
     ((success: TokenData) => {
 
         this.user.username = authData.username;
