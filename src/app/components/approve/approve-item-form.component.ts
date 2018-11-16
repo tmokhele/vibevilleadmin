@@ -31,15 +31,14 @@ export class ApproveComponent implements OnInit {
         })
     }
 
-    approve(auth: AuthData) {
-        console.log('about to approve '+JSON.stringify(auth))
+    approve(auth: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.data = auth
         const d = this.dialog.open(TypographyComponent, dialogConfig);
         const sub = d.componentInstance.onAdd.subscribe(result => {
             this.userService.deleteUser(auth).subscribe(o => {
-                this.registrationItems = this.registrationItems.filter(item => item.username === auth.username);
+                this.registrationItems = this.registrationItems.filter(item => item.username === auth.email);
                 d.close();
             })
         });
