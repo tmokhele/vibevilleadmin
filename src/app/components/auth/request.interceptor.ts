@@ -14,7 +14,7 @@ export class RequestInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     console.log('intercepted request ... ');
-    const url = 'http://52.14.223.190:8086/api/'+req.url;
+    const url = 'http://http://18.191.166.98:8086/api/'+req.url;
     // var url ='http://localhost:8086/api/'+req.url;
     const token = this.auth.getToken();
     const authReq = req.clone({
