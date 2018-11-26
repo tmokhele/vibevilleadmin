@@ -12,7 +12,7 @@ export class RequestInterceptor implements HttpInterceptor {
     , private router: Router, private errorHandler: GlobalErrorHandler) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://http://18.191.166.98:8086/api/'+req.url;
+    const url = 'http://18.191.166.98:8086/api/'+req.url;
     // var url ='http://localhost:8086/api/'+req.url;
     const token = this.auth.getToken();
     const authReq = req.clone({
