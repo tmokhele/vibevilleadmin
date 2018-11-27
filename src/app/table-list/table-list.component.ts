@@ -28,28 +28,6 @@ export class TableListComponent implements OnInit {
 
     openDialog(shopItem?): void {
         this.router.navigate(['/event']);
-        // const dialogRef = this.dialog.open(FormComponent, {
-        //     width: '650px',
-        //     data: {
-        //         _id: shopItem ? shopItem._id : undefined,
-        //         name: shopItem ? shopItem.name : undefined,
-        //         location: shopItem ? shopItem.location : undefined,
-        //         category: shopItem ? shopItem.category : undefined,
-        //         unitPrice: shopItem ? shopItem.unitPrice : undefined,
-        //         quantityInStock: shopItem ? shopItem.quantityInStock : undefined,
-        //         releaseDate: shopItem ? shopItem.releaseDate : undefined,
-        //         description: shopItem ? shopItem.description : undefined,
-        //         imageUrl: shopItem ? shopItem.imageUrl : undefined,
-        //         reviews: shopItem ? shopItem.reviews : [],
-        //         performances: shopItem ? shopItem.performances : []
-        //     }
-        // });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.shopItems$ = this.venue.getShopItems();
-        //     }
-        // });
     }
 
     previewImage(imgUrl: any) {

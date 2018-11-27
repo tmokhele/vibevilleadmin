@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
@@ -7,6 +7,9 @@ import { IShopItem } from 'app/shared/model/shop-item.interface';
 import { AlertService } from 'app/shared/alert';
 import { AlertComponent } from 'app/alert/alert-component';
 import { MatDialog } from '@angular/material/dialog';
+import { IPerformance } from 'app/shared/model/event-performance.interface';
+import { Performances } from 'app/shared/model/performance-model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -17,10 +20,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class FormComponent implements OnInit {
     public shopItemForm: FormGroup;
+    public performanceForm: FormGroup;
     private isCreateForm = true;
+    private event: IShopItem;
     @ViewChild('file') file;
+    @ViewChild('fileArtist') fileArtist;
     public files: Set<File> = new Set();
-
+    public performances: IPerformance[] = [];
+    public performance: Performances = new Performances();
+    public artistFiles: Set<File> = new Set();
+    public events$: Observable<IShopItem[]>;
+    eve: IShopItem[];
     constructor(
         private shop: VenueService,
         public validation: ValidationService,
@@ -30,33 +40,46 @@ export class FormComponent implements OnInit {
     ) {
 
     }
-
-    onNoClick(): void {
-
-    }
-
     submitItem(form: any): void {
         if (form.valid) {
-            const result:  IShopItem =  Object.assign({}, this.shopItemForm.value);
+            const result: IShopItem = Object.assign({}, this.shopItemForm.value);
             const action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(shopItem => {
                 this.alertService.success('Event added successfully')
-                const d =  this.dialog.open( AlertComponent, {
-                      width: '650px',
-                  });
+                const d = this.dialog.open(AlertComponent, {
+                    width: '650px',
+                });
                 // tslint:disable-next-line:no-shadowed-variable
-                d.afterClosed().subscribe( result => {
-                  if (result) {
-                    this.alertService.clear();
-                    this.shopItemForm.reset();
-                  }
+                d.afterClosed().subscribe(result => {
+                    if (result) {
+                        this.alertService.clear();
+                        this.shopItemForm.reset();
+                    }
                 })
             });
         }
     }
 
     ngOnInit(): void {
-        // this.isCreateForm = this.data._id === undefined ? true : false
+        this.events$ = this.shop.getShopItems();
+        this.performanceForm = this.formBuilder.group({
+            'event': [
+                '',
+                Validators.required
+            ],
+            'name': [
+                '',
+                Validators.required
+            ],
+            'performanceTime': [
+                '',
+                Validators.required
+            ],
+            'imageUrl': [
+                ''
+            ]
+        })
+
         this.shopItemForm = this.formBuilder.group({
             'name': ['', Validators.compose([Validators.required, ShopItemFormValidators.nameValidator])],
             'location': [
@@ -123,6 +146,10 @@ export class FormComponent implements OnInit {
         );
     }
 
+    onCountrySelectionChanged(changeEvent) {
+        this.event = changeEvent.source.value;
+    }
+
     onChange(event) {
         if (this.shopItemForm.get('general').value === true) {
             this.shopItemForm.get('generalamount').enable();
@@ -154,26 +181,89 @@ export class FormComponent implements OnInit {
             }
         }
     }
-    onFileChange(event) {
+    onFileChange(event, s: number) {
         const reader = new FileReader();
         if (event.target.files && event.target.files.length > 0) {
             const file = event.target.files[0];
             reader.onloadend = (e) => {
-                // this.image = reader.result;
-                // this.data.imageUrl = reader.result;
-                this.shopItemForm.controls['imageUrl'].setValue(reader.result);
-                this.shopItemForm.get('imageUrl').setValue(reader.result)
-                this.files.add(file);
-                const data = new Blob([file], { type: 'application/text' });
-                const formData = new FormData();
-                formData.append('inputFile', data);
+                if (s === 1) {
+                    this.shopItemForm.controls['imageUrl'].setValue(reader.result);
+                    this.shopItemForm.get('imageUrl').setValue(reader.result)
+                    this.files.add(file);
+                    const data = new Blob([file], { type: 'application/text' });
+                    const formData = new FormData();
+                    formData.append('inputFile', data);
+                }
+                if (s === 2) {
+                    this.performanceForm.controls['imageUrl'].setValue(reader.result);
+                    this.performanceForm.get('imageUrl').setValue(reader.result)
+                    this.artistFiles.clear();
+                    this.artistFiles.add(file);
+                    const data = new Blob([file], { type: 'application/text' });
+                    const formData = new FormData();
+                    formData.append('inputFile', data);
+                }
             }
             reader.readAsDataURL(file);
         };
     }
     delete(file: File) {
         this.files.delete(file);
-        // this.data.imageUrl = '';
     }
 
+    addMore(formData: any) {
+        this.initPerformance();
+        this.performanceForm.controls['name'].reset();
+        this.performanceForm.controls['imageUrl'].reset();
+        this.performanceForm.controls['performanceTime'].reset();
+        this.artistFiles.clear();
+    }
+
+    private initPerformance() {
+        this.performance = new Performances();
+        this.performance.name = this.performanceForm.controls['name'].value;
+        this.performance.imageUrl = this.performanceForm.controls['imageUrl'].value;
+        this.performance.performanceTime = this.performanceForm.controls['performanceTime'].value;
+        this.performance.lastModified = this.performanceForm.controls['event'].value.name;
+        this.performances.push(this.performance);
+    }
+
+    savePerformance(formData: any) {
+        if (this.performanceForm.valid) {
+            this.initPerformance();
+        }
+        this.events$.subscribe(event => {
+            event.forEach(e => {
+                this.performances.forEach(p => {
+                    if (p.lastModified === e.name) {
+                        e.performances.push(p)
+                    }
+                })
+            })
+            this.performances = [];
+            this.alertService.success('Performance added successfully')
+            const d = this.dialog.open(AlertComponent, {
+                width: '650px',
+            });
+            // tslint:disable-next-line:no-shadowed-variable
+            d.afterClosed().subscribe(result => {
+                if (result) {
+                    this.alertService.clear();
+                    this.event = null;
+                    this.performanceForm.reset();
+                }
+            })
+        })
+    }
+
+    removePerformance(performance: Performances) {
+        console.log('ppp: ' + JSON.stringify(performance))
+        const index = this.performances.indexOf(performance);
+        this.performances.splice(index, 1);
+    }
+    isValid() {
+        if (this.performanceForm.invalid && this.performances.length === 0) {
+            return true;
+        }
+    }
 }

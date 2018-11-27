@@ -19,9 +19,7 @@
                         <div *ngIf="(registrationRequests$ | async) as regItems" class="stats">
                             
                                     <i class="material-icons text-info">people</i>
-                                    <button class="btn btn-link p-0" type="button" style="cursor: pointer"(click)="approveRequests()"  [disabled]="regItems.length == 0">Approve Requests</button>
-                            
-                            
+                                    <button class="btn btn-link p-0" type="button" style="cursor: pointer"(click)="approveRequests()"  [disabled]="regItems.length == 0">Approve Requests</button> 
                         </div>
                     </div>
                 </div>
@@ -39,7 +37,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
+                                <i class="material-icons text-success">queue_music</i>
+                            <button class="btn btn-link p-0" type="button" style="cursor: pointer"(click)="addEvent()"  >Add Event</button> 
+                            
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment/moment';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -15,6 +15,7 @@ import { IReview } from '../shared/model/shop-item-review.interface';
 import { ICartItem } from '../shared/model/cart-item.interface';
 import { AuthService } from '../components/auth/auth.service';
 import { CustomError } from '../error/custom-error';
+import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 
 // const _array = require('lodash/array');
@@ -23,7 +24,7 @@ import { CustomError } from '../error/custom-error';
 export class VenueService implements IShopService {
     private subject = new BehaviorSubject<IShopItem[]>([])
     public shopItems$: Observable<IShopItem[]> = this.subject.asObservable()
-
+    @Output() events = new EventEmitter<IShopItem[]>();
     constructor(
         private http: HttpClient,
         private auth: AuthService
@@ -32,27 +33,37 @@ export class VenueService implements IShopService {
     }
 
     getShopItems(userId?: string): Observable<IShopItem[]> {
-        let url = 'event';
+        if (sessionStorage.getItem('events') === null) {
 
-        if (userId) {
-            url = url + '/' + userId;
+            let url = 'event';
+
+            if (userId) {
+                url = url + '/' + userId;
+            }
+            const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+            const network$ = this.http
+                .get<IShopItem[]>(url, { headers: headers })
+                .publishReplay(1, 5000)
+                .refCount();
+
+            network$.subscribe(
+                shopItems => {
+                    sessionStorage.setItem('events', JSON.stringify(shopItems));
+                    this.subject.next(shopItems);
+                },
+                (err) => {
+                    throw new CustomError(err, 'Something went wrong :(')
+                },
+            );
+            return network$;
+        } else {
+            const a = JSON.parse(sessionStorage.getItem('events'));
+            return new Observable((observer) => {
+                // observable execution
+                observer.next(a)
+                observer.complete()
+            })
         }
-           const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
-        const network$ = this.http
-            .get<IShopItem[]>(url, {headers: headers})
-            .publishReplay(1, 5000)
-            .refCount();
-
-        network$.subscribe(
-            shopItems => {
-                this.subject.next(shopItems);
-            },
-            (err) => {
-                throw new CustomError(err, 'Something went wrong :(')
-            },
-        );
-
-        return network$;
     }
 
     getShopItem(id: string): Observable<IShopItem> {

@@ -167,4 +167,9 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  addEvent() {
+    this.router.navigate(['/event']);
+
+  }
+
 }

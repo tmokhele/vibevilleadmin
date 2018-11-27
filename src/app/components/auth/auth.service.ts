@@ -31,9 +31,9 @@ export class AuthService {
 
   login(authData: AuthData) {
 
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
-    this.http.post('auth/signin', authData, {headers: headers}).subscribe
-    ((success: TokenData) => {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    this.http.post('auth/signin', authData, { headers: headers }).subscribe
+      ((success: TokenData) => {
 
         this.user.username = authData.username;
         localStorage.setItem(TOKEN_KEY, success.accessToken)
@@ -41,13 +41,13 @@ export class AuthService {
         this.subject.next({ 'username': authData.username })
         this.authSuccessfully();
       }
-    );
+      );
   }
 
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     this.subject.next(UNKNOWN_USER);
-    this.user  = { username: '' };
+    this.user = { username: '' };
     this.authChange.next(false);
     this.router.navigate(['/login']);
   }
@@ -78,9 +78,13 @@ export class AuthService {
     const token = localStorage.getItem(TOKEN_KEY);
 
     if (token != null && !jwtHelper.isTokenExpired(token)) {
-        return token;
+      return token;
     }
-   return null;
+    if (jwtHelper.isTokenExpired(token)) {
+      sessionStorage.clear();
+      localStorage.clear();
+    }
+    return null;
 
   }
 

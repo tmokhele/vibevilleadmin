@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher, MatStepper, MatDialog } from '@angular/material';
+import { ErrorStateMatcher, MatStepper, MatDialog, MatDialogRef } from '@angular/material';
 import { UserService } from '../services/user.service';
 import { IUserItem } from 'app/shared/model/user-item.interface';
 import { AlertService } from 'app/shared/alert';
@@ -17,7 +17,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-typography',
   templateUrl: './typography.component.html',
-  styleUrls: ['./typography.component.css']
+  styleUrls: ['./typography.component.css'],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
+]
 })
 export class TypographyComponent implements OnInit {
   firstFormGroup: FormGroup;
@@ -66,8 +70,8 @@ export class TypographyComponent implements OnInit {
             width: '650px',
         });
 
-      d.afterClosed().subscribe(result => {
-        if (result) {
+      d.afterClosed().subscribe( closed => {
+        if (closed) {
           stepper.reset();
           this.alertService.clear();
         }
