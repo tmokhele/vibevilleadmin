@@ -83,6 +83,7 @@ export class AuthService {
     if (jwtHelper.isTokenExpired(token)) {
       sessionStorage.clear();
       localStorage.clear();
+      return null;
     }
     return null;
 
