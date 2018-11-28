@@ -2,7 +2,7 @@ import { IReview } from './shop-item-review.interface';
 import { IPerformance } from './event-performance.interface';
 
 export interface IShopItem {
-    _id: string;
+    id: string;
     name: string;
     location: string;
     category: string;

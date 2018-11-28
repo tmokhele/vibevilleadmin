@@ -8,4 +8,6 @@ export interface IShopService {
     getShopItem(string): Observable<IShopItem>;
     addShopItem(any): Observable<IShopItem>;
     updateShopItem(any): Observable<IShopItem>;
+    updateEvents(body: any): Observable<IShopItem[]>;
+
 }

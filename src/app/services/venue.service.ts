@@ -22,6 +22,7 @@ import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 @Injectable()
 export class VenueService implements IShopService {
+
     private subject = new BehaviorSubject<IShopItem[]>([])
     public shopItems$: Observable<IShopItem[]> = this.subject.asObservable()
     @Output() events = new EventEmitter<IShopItem[]>();
@@ -77,7 +78,9 @@ export class VenueService implements IShopService {
     updateShopItem(body: any): Observable<IShopItem> {
         return this.http.put<IShopItem>('event', body)
     }
-
+    updateEvents(body: any): Observable<IShopItem[]> {
+        return this.http.put<IShopItem[]>('event', body);
+    }
     setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IReview> {
         const body: any = {
             'itemId': itemId,
@@ -92,7 +95,7 @@ export class VenueService implements IShopService {
 
     refreshCartCountFor(cartItem: ICartItem) {
         this.subject.value
-            .filter(shopItem => shopItem._id === cartItem.itemId)
+            .filter(shopItem => shopItem.id === cartItem.itemId)
             .shift()
             .cartCount = cartItem.quantity
 

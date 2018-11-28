@@ -30,7 +30,7 @@ export class FormComponent implements OnInit {
     public performance: Performances = new Performances();
     public artistFiles: Set<File> = new Set();
     public events$: Observable<IShopItem[]>;
-    eve: IShopItem[];
+    eve: IShopItem[] = [];
     constructor(
         private shop: VenueService,
         public validation: ValidationService,
@@ -62,6 +62,9 @@ export class FormComponent implements OnInit {
 
     ngOnInit(): void {
         this.events$ = this.shop.getShopItems();
+        this.events$.subscribe( ee => {
+            this.eve = ee;
+        })
         this.performanceForm = this.formBuilder.group({
             'event': [
                 '',
@@ -232,15 +235,16 @@ export class FormComponent implements OnInit {
         if (this.performanceForm.valid) {
             this.initPerformance();
         }
-        this.events$.subscribe(event => {
-            event.forEach(e => {
-                this.performances.forEach(p => {
-                    if (p.lastModified === e.name) {
-                        e.performances.push(p)
+
+        this.eve.forEach (aa => {
+                this.performances.forEach( pp => {
+                    if (aa.name === pp.lastModified) {
+                        aa.performances.push(pp);
                     }
                 })
-            })
-            this.performances = [];
+        })
+        this.performances = [];
+        this.shop.updateEvents(this.eve).subscribe(() => {
             this.alertService.success('Performance added successfully')
             const d = this.dialog.open(AlertComponent, {
                 width: '650px',

@@ -80,10 +80,10 @@ export class AuthService {
     if (token != null && !jwtHelper.isTokenExpired(token)) {
       return token;
     }
-    if (jwtHelper.isTokenExpired(token)) {
+    if (token != null && jwtHelper.isTokenExpired(token)) {
       sessionStorage.clear();
       localStorage.clear();
-      return null;
+      this.router.navigate(['/login']);
     }
     return null;
 
