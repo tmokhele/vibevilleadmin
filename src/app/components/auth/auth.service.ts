@@ -45,6 +45,7 @@ export class AuthService {
   }
 
   logout() {
+    sessionStorage.clear();
     localStorage.removeItem(TOKEN_KEY);
     this.subject.next(UNKNOWN_USER);
     this.user = { username: '' };

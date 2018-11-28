@@ -114,4 +114,8 @@ export class VenueService implements IShopService {
         //     this.subject.value.push(shopItem);
         // }
     }
+
+    refreshEvents() {
+            sessionStorage.clear();
+    }
 }

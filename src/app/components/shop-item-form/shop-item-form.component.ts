@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IPerformance } from 'app/shared/model/event-performance.interface';
 import { Performances } from 'app/shared/model/performance-model';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class FormComponent implements OnInit {
         public validation: ValidationService,
         private formBuilder: FormBuilder,
         private alertService: AlertService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private router: Router
     ) {
 
     }
@@ -49,11 +51,12 @@ export class FormComponent implements OnInit {
                 const d = this.dialog.open(AlertComponent, {
                     width: '650px',
                 });
-                // tslint:disable-next-line:no-shadowed-variable
-                d.afterClosed().subscribe(result => {
-                    if (result) {
+                d.afterClosed().subscribe(closed => {
+                    if (closed) {
                         this.alertService.clear();
                         this.shopItemForm.reset();
+                        this.shop.refreshEvents();
+                        this.router.navigate(['/venue']);
                     }
                 })
             });
@@ -62,7 +65,7 @@ export class FormComponent implements OnInit {
 
     ngOnInit(): void {
         this.events$ = this.shop.getShopItems();
-        this.events$.subscribe( ee => {
+        this.events$.subscribe(ee => {
             this.eve = ee;
         })
         this.performanceForm = this.formBuilder.group({
@@ -236,12 +239,12 @@ export class FormComponent implements OnInit {
             this.initPerformance();
         }
 
-        this.eve.forEach (aa => {
-                this.performances.forEach( pp => {
-                    if (aa.name === pp.lastModified) {
-                        aa.performances.push(pp);
-                    }
-                })
+        this.eve.forEach(aa => {
+            this.performances.forEach(pp => {
+                if (aa.name === pp.lastModified) {
+                    aa.performances.push(pp);
+                }
+            })
         })
         this.performances = [];
         this.shop.updateEvents(this.eve).subscribe(() => {
@@ -255,6 +258,8 @@ export class FormComponent implements OnInit {
                     this.alertService.clear();
                     this.event = null;
                     this.performanceForm.reset();
+                    this.shop.refreshEvents();
+                    this.router.navigate(['/venue']);
                 }
             })
         })
