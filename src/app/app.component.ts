@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { Router,Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { LoaderService } from './services/loader.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from './components/auth/auth.service';
@@ -14,12 +14,12 @@ export class AppComponent {
   showLoader: boolean;
   authSubscription: Subscription;
   isAuth = false;
-  constructor(private router:Router,private loaderService:LoaderService,private authService: AuthService)
+  constructor(private router: Router, private loaderService: LoaderService, private authService: AuthService)
   {
-    this.router.events.subscribe((event:Event) =>{
-      switch(true)
+    this.router.events.subscribe((event: Event) => {
+      switch (true)
       {
-        case event instanceof NavigationStart:{
+        case event instanceof NavigationStart: {
          this.loaderService.display(true);
           break;
 

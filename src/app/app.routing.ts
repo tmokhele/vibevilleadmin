@@ -30,8 +30,7 @@ const routes: Routes =
     },
     {
       path: 'confirm',
-      redirectTo: 'confirm',
-      pathMatch: 'full',
+      redirectTo: 'confirm'
     },
     {
       path: '',
