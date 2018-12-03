@@ -32,6 +32,7 @@ import { RegistrationComponent } from './components/auth/registration/registrati
 import { PasswordResetComponent } from './components/auth/passwordreset/passwordreset.component';
 import { UserService } from './services/user.service';
 import { ConfirmationDialogComponent } from './alert/delete-component';
+import { PasswordConfirmComponent } from './components/auth/confirm/passwordconfirm.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { ConfirmationDialogComponent } from './alert/delete-component';
     AlertComponent,
     RegistrationComponent,
     PasswordResetComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    PasswordConfirmComponent
 
   ],
 

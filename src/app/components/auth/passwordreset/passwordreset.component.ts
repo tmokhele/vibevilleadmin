@@ -18,15 +18,6 @@ export class PasswordResetComponent implements OnInit {
     'email': [
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'confirm_password': [
-      { type: 'required', message: 'Confirm password is required' },
-      { type: 'MutchPassword', message: 'Password mismatch' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ]
   }
   userDetailsForm: FormGroup;
@@ -39,20 +30,12 @@ export class PasswordResetComponent implements OnInit {
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
-      password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-     ])),
-     confirm_password: ['', Validators.required]
-    }, {
-      validator: PasswordValidation.MatchPassword
+      ]))
     });
   }
 
   onSubmitUserDetails(form: any) {
-      this.alertService.success('Password Reset Succefull.')
+      this.alertService.success('Password Reset Succefull. You should receive an email shortly to complete the password reset')
       const d =  this.dialog.open( AlertComponent, {
             width: '650px',
         });
@@ -60,10 +43,7 @@ export class PasswordResetComponent implements OnInit {
         if (result) {
           this.alertService.clear();
           this.userDetailsForm.reset();
-          // this.authService.login({
-          //   username:  result.email,
-          //   password: result.password
-          // });
+          this.router.navigate(['/login']);
         }
       })
   }

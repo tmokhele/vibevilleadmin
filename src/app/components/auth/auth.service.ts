@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import * as moment from 'moment/moment';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { TokenData } from '../../shared/model/token-data.model';
 import { User } from '../../shared/model/user.model';
 import { AuthData } from '../../shared/model/auth-data.model';
+import { PasswordReset } from 'app/shared/model/passwordreset-model';
 
 
 const UNKNOWN_USER: User = {
@@ -106,5 +107,9 @@ export class AuthService {
       console.log("error" + e)
     }
   }
+
+  confirmPasswordReset(data: any): Observable<PasswordReset> {
+    return this.http.post<PasswordReset>('auth/confirm', data)
+}
 
 }
