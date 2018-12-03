@@ -20,6 +20,7 @@ const jwtHelper = new JwtHelper();
 const TOKEN_KEY = 'token'
 @Injectable()
 export class AuthService {
+
   authChange = new Subject<boolean>();
   user: User = { username: '' };
   private subject = new BehaviorSubject(UNKNOWN_USER);
@@ -110,6 +111,9 @@ export class AuthService {
 
   confirmPasswordReset(data: any): Observable<PasswordReset> {
     return this.http.post<PasswordReset>('auth/confirm', data)
-}
+  }
+  resetPassword(data: any): any {
+    return this.http.post<PasswordReset>('auth/reset', data);
+  }
 
 }

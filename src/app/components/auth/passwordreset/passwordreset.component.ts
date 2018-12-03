@@ -35,6 +35,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   onSubmitUserDetails(form: any) {
+    this.authService.resetPassword(form.email).subscribe (resetResults => {
       this.alertService.success('Password Reset Succefull. You should receive an email shortly to complete the password reset')
       const d =  this.dialog.open( AlertComponent, {
             width: '650px',
@@ -46,6 +47,8 @@ export class PasswordResetComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       })
+    })
+
   }
 
   cancelPasswordReset() {
