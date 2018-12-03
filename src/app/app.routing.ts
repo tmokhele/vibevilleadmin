@@ -42,7 +42,7 @@ const routes: Routes =
         }],
     }, { path: 'register', component: RegistrationComponent },
     { path: 'reset', component: PasswordResetComponent },
-    { path: 'confirm', component: PasswordConfirmComponent }
+    { path: 'confirm:mode&:oobCode&:lang', component: PasswordConfirmComponent }
   ];
 
 @NgModule({
