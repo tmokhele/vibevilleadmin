@@ -24,6 +24,11 @@ const routes: Routes =
       pathMatch: 'full',
     },
     {
+      path: 'confirm',
+      redirectTo: 'confirm',
+      pathMatch: 'full',
+    },
+    {
       path: 'reset',
       redirectTo: 'reset',
       pathMatch: 'full',
