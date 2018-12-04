@@ -29,10 +29,6 @@ const routes: Routes =
       pathMatch: 'full',
     },
     {
-      path: 'confirm',
-      redirectTo: 'confirm'
-    },
-    {
       path: '',
       component: AdminLayoutComponent,
       children: [
