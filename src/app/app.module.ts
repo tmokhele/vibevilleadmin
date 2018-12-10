@@ -33,6 +33,7 @@ import { PasswordResetComponent } from './components/auth/passwordreset/password
 import { UserService } from './services/user.service';
 import { ConfirmationDialogComponent } from './alert/delete-component';
 import { PasswordConfirmComponent } from './components/auth/confirm/passwordconfirm.component';
+import { EventGuard } from './shared/guards/event-guard';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { PasswordConfirmComponent } from './components/auth/confirm/passwordconf
     LoaderService,
     GlobalErrorHandler,
     UserService,
+    EventGuard,
     AlertService,
     {
       provide: HTTP_INTERCEPTORS,

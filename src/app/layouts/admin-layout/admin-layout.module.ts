@@ -34,6 +34,7 @@ import { LoaderService } from '../../services/loader.service';
 import { ShopItemFilterPipe } from '../../shared/model/shop-item-filter.pipe';
 import { UserService } from '../../services/user.service';
 import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
+import { EventComponent } from 'app/event/event.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { ApproveComponent } from 'app/components/approve/approve-item-form.compo
     UpgradeComponent,
     ShopItemFilterPipe,
     FormComponent,
-    ApproveComponent
+    ApproveComponent,
+    EventComponent
   ],
   providers: [LoaderService, UserService]
   , entryComponents: [

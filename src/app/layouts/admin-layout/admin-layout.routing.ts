@@ -11,6 +11,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { AuthGuard } from '../../shared/guards/auth-guard';
 import { FormComponent } from 'app/components/shop-item-form/shop-item-form.component';
 import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
+import { EventComponent } from 'app/event/event.component';
+import { EventGuard } from 'app/shared/guards/event-guard';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent , canActivate: [AuthGuard]},
@@ -22,5 +24,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'event',           component: FormComponent , canActivate: [AuthGuard]},
     { path: 'notifications',  component: NotificationsComponent , canActivate: [AuthGuard]},
     { path: 'approve',  component: ApproveComponent , canActivate: [AuthGuard]},
+    { path: 'editEvent',  component: EventComponent , canActivate: [AuthGuard, EventGuard]},
     { path: 'logout',        component: UpgradeComponent , canActivate: [AuthGuard]},
 ];

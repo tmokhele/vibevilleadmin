@@ -25,17 +25,12 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    // this.showLoadingDialog();
-    setTimeout(() => {
       this.login({
         username:  form.form.value.email,
         password: form.form.value.password,
         name: ' ',
         surname: ' '
       });
-    }, 4000);
-
-    console.log(form);
   }
 
   login(authData: AuthData) {

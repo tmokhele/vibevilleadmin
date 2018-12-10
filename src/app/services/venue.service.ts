@@ -15,17 +15,15 @@ import { IReview } from '../shared/model/shop-item-review.interface';
 import { ICartItem } from '../shared/model/cart-item.interface';
 import { AuthService } from '../components/auth/auth.service';
 import { CustomError } from '../error/custom-error';
-import { fromPromise } from 'rxjs/internal/observable/fromPromise';
+import { EventItem } from 'app/shared/model/event-item';
 
 
 // const _array = require('lodash/array');
 
 @Injectable()
 export class VenueService implements IShopService {
-
     private subject = new BehaviorSubject<IShopItem[]>([])
     public shopItems$: Observable<IShopItem[]> = this.subject.asObservable()
-    @Output() events = new EventEmitter<IShopItem[]>();
     constructor(
         private http: HttpClient,
         private auth: AuthService
@@ -78,7 +76,7 @@ export class VenueService implements IShopService {
     updateShopItem(body: any): Observable<IShopItem> {
         return this.http.put<IShopItem>('event', body)
     }
-    updateEvents(body: any): Observable<IShopItem[]> {
+    updateEvents(body: IShopItem[]): Observable<IShopItem[]> {
         return this.http.put<IShopItem[]>('event', body);
     }
     setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IReview> {
@@ -117,5 +115,14 @@ export class VenueService implements IShopService {
 
     refreshEvents() {
             sessionStorage.clear();
+    }
+    setSelectedEvent(event: any): any {
+        sessionStorage.setItem('event', JSON.stringify(event));
+    }
+    getSelectedEVent(): EventItem {
+        return JSON.parse(sessionStorage.getItem('event'));
+    }
+    clearEvent() {
+        sessionStorage.removeItem('event');
     }
 }

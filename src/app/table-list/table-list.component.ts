@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FormComponent } from '../components/shop-item-form/shop-item-form.component';
 import { VenueService } from '../services/venue.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IShopItem } from '../shared/model/shop-item.interface';
 import { AlertService } from 'app/shared/alert';
 import { Router } from '@angular/router';
+import { EventItem } from 'app/shared/model/event-item';
 
 
 @Component({
@@ -16,9 +16,11 @@ import { Router } from '@angular/router';
 export class TableListComponent implements OnInit {
     public shopItems$: Observable<IShopItem[]>;
     public filterBy;
+    public event: IShopItem;
     constructor(public dialog: MatDialog, public venue: VenueService, public alertService: AlertService, public router: Router) { }
 
     ngOnInit() {
+        this.venue.clearEvent();
         this.geEventList(null);
     }
 
@@ -36,6 +38,11 @@ export class TableListComponent implements OnInit {
 
     addImage(event: any) {
 
+    }
+
+    editEvent(event: any) {
+        this.venue.setSelectedEvent(event)
+        this.router.navigate(['/editEvent']);
     }
 
 }
