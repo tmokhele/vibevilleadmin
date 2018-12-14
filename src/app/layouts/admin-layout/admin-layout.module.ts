@@ -35,6 +35,7 @@ import { ShopItemFilterPipe } from '../../shared/model/shop-item-filter.pipe';
 import { UserService } from '../../services/user.service';
 import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
 import { EventComponent } from 'app/event/event.component';
+import { ImagePreviewComponent } from 'app/image-preview/image-preview.component';
 
 @NgModule({
   imports: [
@@ -70,11 +71,13 @@ import { EventComponent } from 'app/event/event.component';
     ShopItemFilterPipe,
     FormComponent,
     ApproveComponent,
-    EventComponent
+    EventComponent,
+    ImagePreviewComponent
   ],
   providers: [LoaderService, UserService]
   , entryComponents: [
-    FormComponent
+    FormComponent,
+    ImagePreviewComponent
 ]
 })
 

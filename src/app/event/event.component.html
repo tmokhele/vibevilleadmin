@@ -5,12 +5,17 @@
             <div class="col-md-6">
                 <div class="card card-profile">
                     <div class="card-avatar">
+                        <div for="image-click" class="hovereffect">
+                            <img class="img-responsive" src="{{e.imageUrl}}" />
+                            <div class="overlay">
 
-                        <img class="img" src="{{e.imageUrl}}" />
+                                <a href="javascript:void(0);" class="info"  (click)="previewImage(e.imageUrl)">Preview</a>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="card-body">
-                        <h6 class="card-category text-gray">Edit Event</h6>
+                        <h6 class="card-category text-gray">Event Details</h6>
                         <form [formGroup]="eventItemForm">
                             <div class="row">
                                 <div class="col-md-6">

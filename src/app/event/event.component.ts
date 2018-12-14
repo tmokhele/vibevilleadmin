@@ -9,6 +9,7 @@ import { ShopItemFormValidators } from 'app/components/shop-item-form/shop-item-
 import { ValidationService } from 'app/components/shop-item-form/form-validation.service';
 import { IShopItem } from 'app/shared/model/shop-item.interface';
 import { AlertComponent } from 'app/alert/alert-component';
+import { ImagePreviewComponent } from 'app/image-preview/image-preview.component';
 
 
 @Component({
@@ -132,7 +133,7 @@ export class EventComponent implements OnInit {
     }
 
     previewImage(imgUrl: any) {
-
+        this.dialog.open(ImagePreviewComponent)
     }
 
     addImage(event: any) {
