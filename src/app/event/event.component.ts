@@ -133,7 +133,11 @@ export class EventComponent implements OnInit {
     }
 
     previewImage(imgUrl: any) {
-        this.dialog.open(ImagePreviewComponent)
+        this.dialog.open(ImagePreviewComponent, {
+            data: {
+              dataKey: imgUrl
+            }
+        });
     }
 
     addImage(event: any) {

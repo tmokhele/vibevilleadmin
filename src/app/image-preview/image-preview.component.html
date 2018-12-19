@@ -1,7 +1,10 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            
-        </div>
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between">
+        <div  align="end">
+    <button mat-icon-button [mat-dialog-close]>
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
     </div>
 </div>
+<mat-dialog-content>
+    <img class="img-responsive" src="{{imageUrl}}" />
+</mat-dialog-content>
