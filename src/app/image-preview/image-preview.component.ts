@@ -7,14 +7,10 @@ import {MAT_DIALOG_DATA} from '@angular/material'
     templateUrl: './image-preview.component.html',
     styleUrls: ['./image-preview.component.css']
 })
-export class ImagePreviewComponent implements OnInit {
+export class ImagePreviewComponent {
     public imageUrl: string;
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
         this.imageUrl = data.dataKey;
-    }
-
-    ngOnInit() {
-        console.log('url' +this.data.dataKey)
     }
 
 }

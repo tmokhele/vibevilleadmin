@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Alert, AlertType } from './model/alert-model';
- 
 
- 
 @Injectable()
 export class AlertService {
     public subject = new BehaviorSubject<Alert>(new Alert);
     private keepAfterRouteChange = false;
- 
+
     constructor(private router: Router) {
         // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
         router.events.subscribe(event => {
@@ -24,11 +22,11 @@ export class AlertService {
             }
         });
     }
- 
+
     getAlert(): Observable<any> {
         return this.subject.asObservable();
     }
- 
+
     success(message: string, keepAfterRouteChange = false) {
         this.alert(AlertType.Success, message, keepAfterRouteChange);
     }

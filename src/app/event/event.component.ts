@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { VenueService } from '../services/venue.service';
 import { AlertService } from 'app/shared/alert';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +10,9 @@ import { ValidationService } from 'app/components/shop-item-form/form-validation
 import { IShopItem } from 'app/shared/model/shop-item.interface';
 import { AlertComponent } from 'app/alert/alert-component';
 import { ImagePreviewComponent } from 'app/image-preview/image-preview.component';
+import { PerformanceComponent } from 'app/performance/performance.component';
+import { ConfirmationDialogComponent } from 'app/alert/delete-component';
+import { IPerformance } from 'app/shared/model/event-performance.interface';
 
 
 @Component({
@@ -23,11 +26,11 @@ export class EventComponent implements OnInit {
     eventItemForm: FormGroup;
     ticketValue: string[] = [];
     events: IShopItem[] = [];
+    dialogRef: MatDialogRef<ConfirmationDialogComponent>;
     constructor(public dialog: MatDialog, public venue: VenueService, public validation: ValidationService,
         public alertService: AlertService,
         public router: Router, public a: ActivatedRoute, private formBuilder: FormBuilder) {
         this.e = this.venue.getSelectedEVent();
-        console.log('event value :' + JSON.stringify(this.e))
     }
 
     ngOnInit(): void {
@@ -140,9 +143,30 @@ export class EventComponent implements OnInit {
         });
     }
 
-    addImage(event: any) {
+    editPerformance(p: any) {
+        this.dialog.open(PerformanceComponent, {
+            data: {
+              performance: p,
+              event: this.e
+            }
+        })
 
     }
+
+    deletePerformance(performance: IPerformance) {
+        this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            disableClose: false
+          });
+          this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to remove performance from event?'
+          this.dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+               const index =  this.e.performances.indexOf(performance);
+               this.e.performances.splice(index, 1);
+            }
+            this.dialogRef = null;
+          });
+    }
+
     back() {
         this.router.navigate(['/venue']);
     }
@@ -162,6 +186,7 @@ export class EventComponent implements OnInit {
             // tslint:disable-next-line:no-shadowed-variable
             d.afterClosed().subscribe(result => {
                 if (result) {
+                    this.venue.refreshEvents()
                     this.alertService.clear();
                     this.e = null;
                     this.eventItemForm.reset();

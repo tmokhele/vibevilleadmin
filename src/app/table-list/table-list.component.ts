@@ -17,7 +17,10 @@ export class TableListComponent implements OnInit {
     public shopItems$: Observable<IShopItem[]>;
     public filterBy;
     public event: IShopItem;
-    constructor(public dialog: MatDialog, public venue: VenueService, public alertService: AlertService, public router: Router) { }
+    constructor(public dialog: MatDialog, public venue: VenueService, public alertService: AlertService, public router: Router) {
+        this.venue.clearEvent();
+        this.geEventList(null);
+     }
 
     ngOnInit() {
         this.venue.clearEvent();

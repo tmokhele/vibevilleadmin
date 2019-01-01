@@ -1,0 +1,84 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+
+            <div class="col-md-12">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <div for="image-click" class="hovereffect">
+                            <img class="img-responsive" src="{{e.imageUrl}}" />
+                            <div class="overlay">
+
+                                <a href="javascript:void(0);" class="info" (click)="previewImage(e.imageUrl)">Preview</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray">Performance Details</h6>
+                        <form novalidate [formGroup]="performanceForm">
+                            <!-- <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="onCountrySelectionChanged($event)"
+                                            formControlName="event" class="my-item-text" placeholder="Event">
+                                            <mat-option *ngFor="let event of (events$ | async)" [value]="event.name">
+
+                                                {{event.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                           
+                            </div> -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="standard">
+                                        <input matInput placeholder="Name of Artist" formControlName="name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="standard">
+                                        <input matInput placeholder="Performance Time" formControlName="performanceTime"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="hidden" formControlName="imageUrl" />
+
+                                <button mat-button (click)="fileArtist.click()" color="accent">
+                                    <mat-icon>add_a_photo</mat-icon>
+                                    Upload Artist Image
+                                </button>
+                                <input type="file" id="leaveapplication.attachment" style="display: none" class="hidden-input"
+                                    (change)="onFileChange($event)" accept="image/jpeg, .jpeg, image/png, .png, image/pjpeg, .jpg"
+                                    #fileArtist>
+                            </div>
+                            <mat-list class="col-md-3">
+                                <mat-list-item *ngFor="let file of artistFiles">
+                                    <button mat-icon-button (click)="deletePerformance(file)">
+                                        <mat-icon color="warn">delete</mat-icon>
+                                    </button>
+                                    <button mat-icon-button (click)="delete(file)">
+                                        <mat-icon color="primary">image_search</mat-icon>
+                                    </button>
+                                    <h4 mat-line>{{file.name}}</h4>
+                                </mat-list-item>
+                            </mat-list>
+                            <div fxLayout="row">
+                            </div>
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <button button class="btn btn-success btn-round" type="submit" mat-raised-button
+                                    mat-button mat-dialog-close [disabled]="isValid()">
+                                    Ok
+                                </button>
+                            </div>
+                  
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>

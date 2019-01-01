@@ -36,6 +36,7 @@ import { UserService } from '../../services/user.service';
 import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
 import { EventComponent } from 'app/event/event.component';
 import { ImagePreviewComponent } from 'app/image-preview/image-preview.component';
+import { PerformanceComponent } from 'app/performance/performance.component';
 
 @NgModule({
   imports: [
@@ -72,12 +73,14 @@ import { ImagePreviewComponent } from 'app/image-preview/image-preview.component
     FormComponent,
     ApproveComponent,
     EventComponent,
-    ImagePreviewComponent
+    ImagePreviewComponent,
+    PerformanceComponent
   ],
   providers: [LoaderService, UserService]
   , entryComponents: [
     FormComponent,
-    ImagePreviewComponent
+    ImagePreviewComponent,
+    PerformanceComponent
 ]
 })
 

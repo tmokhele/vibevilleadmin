@@ -266,7 +266,6 @@ export class FormComponent implements OnInit {
     }
 
     removePerformance(performance: Performances) {
-        console.log('ppp: ' + JSON.stringify(performance))
         const index = this.performances.indexOf(performance);
         this.performances.splice(index, 1);
     }
