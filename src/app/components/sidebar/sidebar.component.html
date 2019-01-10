@@ -58,29 +58,30 @@
     <ul class="nav">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
+                <i class="material-icons faa-tada animated">{{menuItem.icon}}</i>
                 <p>{{menuItem.title}}</p>
             </a>
         </li>
-        <li  class="dropdown nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#menuPanelSubListGroup">
-                <i class="material-icons">bubble_chart</i>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class='fa fa-wrench faa-tada animated'></i>
                 <p>User Admin</p>
             </a>
-            <ul id="menuPanelSubListGroup" class="collapse">
-                <li  data-toggle="collapse" href="#menuPanelSubListGroup" class="list-group-item">
-                    <a class=" dropdown-item nav-link" routerLink="/addUser" routerLinkActive="active">
-                        <i class="material-icons">person_add</i>
-                        <p>Create/Add User</p>
-                    </a>
-                </li>
-                <li routerLinkActive="active" data-toggle="collapse" href="#menuPanelSubListGroup" class="list-group-item">
-                    <a class="dropdown-item nav-link" routerLink="/userEdit" routerLinkActive="active">
-                        <i class="material-icons">edit</i>
-                        <p>Edit User Details</p>
-                    </a>
-                </li>
-            </ul>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" routerLink="/addUser" routerLinkActive="active"><i class="material-icons">person_add</i>Create/Add User</a>
+                <a class="dropdown-item" routerLink="/userEdit" routerLinkActive="active"><i class="material-icons">edit</i>Edit User Details</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-mixcloud faa-tada animated" aria-hidden="true"></i>
+                <p>Media Admin</p>
+            </a>
+            
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" routerLink="/video" routerLinkActive="active"><i class="fa fa-file-video-o faa-ring animated" aria-hidden="true"></i>Upload/Edit Video</a>
+                <a class="dropdown-item" routerLink="/audio" routerLinkActive="active"><i class="fa fa-file-image-o faa-burst animated" aria-hidden="true"></i>Upload/Edit Audio</a>
+            </div>
         </li>
     </ul>
 </div>
