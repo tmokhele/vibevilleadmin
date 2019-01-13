@@ -1,4 +1,6 @@
+import { IUserItem } from './user-item.interface';
+
 export interface TokenData {
   accessToken: string;
-  tokenType: string;
+  accountInfo: IUserItem;
 }

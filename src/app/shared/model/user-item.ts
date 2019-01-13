@@ -1,6 +1,8 @@
-export interface IUserItem {
-    uid?: string;
-    emailAddress?: string;
+import { IUserItem } from './user-item.interface';
+
+
+export class UserItem implements IUserItem {
+    uid?: string;    emailAddress?: string;
     contactNumber: string;
     userAddress?: string;
     name?: string;
@@ -13,4 +15,6 @@ export interface IUserItem {
     about?: string;
     profilePicURL?: string;
     role?: string;
+
+   
 }
