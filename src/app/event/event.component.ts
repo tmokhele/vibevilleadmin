@@ -13,6 +13,7 @@ import { ImagePreviewComponent } from 'app/image-preview/image-preview.component
 import { PerformanceComponent } from 'app/performance/performance.component';
 import { ConfirmationDialogComponent } from 'app/alert/delete-component';
 import { IPerformance } from 'app/shared/model/event-performance.interface';
+import { Performances } from 'app/shared/model/performance-model';
 
 
 @Component({
@@ -26,7 +27,9 @@ export class EventComponent implements OnInit {
     eventItemForm: FormGroup;
     ticketValue: string[] = [];
     events: IShopItem[] = [];
+    performance: Performances;
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
+    perfomranceRef: MatDialogRef<PerformanceComponent>;
     constructor(public dialog: MatDialog, public venue: VenueService, public validation: ValidationService,
         public alertService: AlertService,
         public router: Router, public a: ActivatedRoute, private formBuilder: FormBuilder) {
@@ -149,6 +152,23 @@ export class EventComponent implements OnInit {
               performance: p,
               event: this.e
             }
+        })
+
+    }
+
+    newPerformance() {
+        this.performance = new Performances()
+        this.perfomranceRef = this.dialog.open(PerformanceComponent, {
+            data: {
+              performance: this.performance,
+              event: this.e
+            }
+        })
+        this.perfomranceRef.afterClosed().subscribe(result => {
+            if (result.name !== null && result.performanceTime !== null) {
+                this.e.performances.push(result)
+            }
+
         })
 
     }

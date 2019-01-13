@@ -13,6 +13,7 @@ import { FormComponent } from 'app/components/shop-item-form/shop-item-form.comp
 import { ApproveComponent } from 'app/components/approve/approve-item-form.component';
 import { EventComponent } from 'app/event/event.component';
 import { EventGuard } from 'app/shared/guards/event-guard';
+import { UserEditComponent } from 'app/components/user/user-edit-form.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent , canActivate: [AuthGuard]},
@@ -25,5 +26,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent , canActivate: [AuthGuard]},
     { path: 'approve',  component: ApproveComponent , canActivate: [AuthGuard]},
     { path: 'editEvent',  component: EventComponent , canActivate: [AuthGuard, EventGuard]},
+    { path: 'userEdit',        component: UserEditComponent , canActivate: [AuthGuard]},
     { path: 'logout',        component: UpgradeComponent , canActivate: [AuthGuard]},
 ];

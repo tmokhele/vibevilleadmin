@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { IUserService } from '../contracts/user-service.interface';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { IUserItem } from '../shared/model/user-item.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { CustomError } from 'app/error/custom-error';
 import { AuthData } from 'app/shared/model/auth-data.model';
 
 @Injectable()
 export class UserService implements IUserService {
-    private subject = new BehaviorSubject<IUserItem[]>([])
+    public subject = new BehaviorSubject<IUserItem[]>([])
     public userItems$: Observable<IUserItem[]> = this.subject.asObservable()
     public registrationSubject = new BehaviorSubject<AuthData[]>([])
     public registrationItems$: Observable<AuthData[]> = this.registrationSubject.asObservable()
@@ -21,11 +21,12 @@ export class UserService implements IUserService {
        return this.http.post<AuthData>('user/remove', request)
     }
     getUsers(): Observable<IUserItem[]> {
-        const network = this.http.get<IUserItem[]>('/').publishReplay(1, 5000)
+        const network = this.http.get<IUserItem[]>('user/all').publishReplay(1, 5000)
             .refCount();
 
         network.subscribe(
             userItems => {
+                console.log('users' + JSON.stringify(userItems))
                 this.subject.next(userItems);
             },
             (err) => {
@@ -45,7 +46,7 @@ export class UserService implements IUserService {
     registerUser(data: any): Observable<IUserItem> {
         return this.http.post<IUserItem>('auth/register', data)
     }
-    editUser(IUserItem: any): Observable<IUserItem> {
+    editUser(iUserItem: IUserItem): Observable<IUserItem> {
         throw new Error('Method not implemented.');
     }
 

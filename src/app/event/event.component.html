@@ -153,8 +153,6 @@
                                         <mat-icon color="warn">delete</mat-icon>
                                     </button>
                                     <h4 mat-line>{{file.name}}</h4>
-
-                                    <!-- <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar> -->
                                 </mat-list-item>
                             </mat-list>
                         </form>
@@ -210,19 +208,26 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                    <button mat-raised-button type="button" matTooltip="Edit Performance"
-                                                        [matTooltipPosition]="'above'" (click)="editPerformance(performance)" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
-                                                    <button mat-raised-button type="button" matTooltip="Remove Performance"
-                                                        [matTooltipPosition]="'above'" (click)="deletePerformance(performance)" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                        <i class="material-icons">delete_forever</i>
-                                                    </button>
-                                                </td>
+                                                <button mat-raised-button type="button" matTooltip="Edit Performance"
+                                                    [matTooltipPosition]="'above'" (click)="editPerformance(performance)"
+                                                    class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button mat-raised-button type="button" matTooltip="Remove Performance"
+                                                    [matTooltipPosition]="'above'" (click)="deletePerformance(performance)"
+                                                    class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">delete_forever</i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row h-100 justify-content-center align-items-center">
+                        <button button class="btn btn-info btn-round" mat-button (click)="newPerformance()">Add Performance</button>
+                        <div fxLayout="row" fxLayoutAlign="end">
                         </div>
                     </div>
                 </div>

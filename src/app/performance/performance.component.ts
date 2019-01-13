@@ -16,14 +16,14 @@ import { EventItem } from 'app/shared/model/event-item';
     styleUrls: ['./performance.component.css']
 })
 export class PerformanceComponent implements OnInit {
-    e: IPerformance;
+    public e: IPerformance;
     event: EventItem;
     eventValue: string;
     public events$: Observable<IShopItem[]>;
     performanceForm: FormGroup;
     eve: IShopItem[] = [];
     @ViewChild('fileArtist') fileArtist;
-    constructor(public dialog: MatDialog,
+    constructor(
         public alertService: AlertService,  private venueService: VenueService,
         public router: Router, private formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any) {
           this.e = data.performance;
