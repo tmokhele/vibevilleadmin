@@ -1,0 +1,69 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose">
+                        <h4 class="card-title ">User Requests</h4>
+                        <p class="card-category">Here is a list of user login requests</p>
+                    </div>
+                    <div *ngIf="registrationItems" class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>
+                                            Requestors Name
+                                        </th>
+                                        <th>
+                                            Requestors Surname
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Approve
+                                        </th>
+                                        <th>
+                                            Decline
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngFor='let regRequest of registrationItems'>
+                                    <tr>
+                                        <td>
+                                            {{regRequest.name}}
+                                        </td>
+                                        <td>
+                                            {{regRequest.surname}}
+                                        </td>
+
+                                        <td>
+                                            {{regRequest.email}}
+                                        </td>
+
+                                        <td>
+                                            <button mat-raised-button type="button" matTooltip="Approve Request"
+                                                (click)="approve(regRequest)" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">verified_user</i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button mat-raised-button type="button" matTooltip="Decline Request"
+                                                (click)="decline(regRequest)" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">person_add_disabled</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

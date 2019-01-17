@@ -14,6 +14,8 @@ import { ApproveComponent } from 'app/components/approve/approve-item-form.compo
 import { EventComponent } from 'app/event/event.component';
 import { EventGuard } from 'app/shared/guards/event-guard';
 import { UserEditComponent } from 'app/components/user/user-edit-form.component';
+import { ImageComponent } from 'app/components/media/image/image-item-form.component';
+import { VideoComponent } from 'app/components/media/video/video-item-form.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent , canActivate: [AuthGuard]},
@@ -27,5 +29,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'approve',  component: ApproveComponent , canActivate: [AuthGuard]},
     { path: 'editEvent',  component: EventComponent , canActivate: [AuthGuard, EventGuard]},
     { path: 'userEdit',        component: UserEditComponent , canActivate: [AuthGuard]},
+    { path: 'image',        component: ImageComponent , canActivate: [AuthGuard]},
+    { path: 'video',        component: VideoComponent , canActivate: [AuthGuard]},
     { path: 'logout',        component: UpgradeComponent , canActivate: [AuthGuard]},
 ];

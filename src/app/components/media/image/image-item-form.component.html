@@ -1,0 +1,82 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                    <div class="card-header card-header-danger">
+                            <h3 class="card-title"><i class="fa fa-files-o"></i>  Upload Images</h3>
+                        </div>
+                <div class="card-body" id="main-form-content">
+                    <form [formGroup]="documentGrp" (ngSubmit)="OnSubmit(documentGrp.value)" #uploadDocumentsForm="ngForm"
+                        ngNativeValidate>
+                        <div class="box box-solid box-primary">
+                            <div class="box-body" formArrayName="items">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div *ngFor="let item of items.controls; let i = index;">
+                                            <div [formGroupName]="i">
+                                                <table id="tbl-upload" class="table table-bordered  table-striped">
+                                                    <tbody>
+                                                        <tr *ngIf="i==0" class="active">
+                                                            <th>Image Name</th>
+                                                            <th>Image Description</th>
+                                                            <th>Image File</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group required">
+                                                                    <input type="text" class="form-control" name="doc_name"
+                                                                        formControlName="doc_name" placeholder="Image Category"
+                                                                        required="">
+                                                                    <div class="help-block"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group ">
+                                                                    <input type="text" class="form-control" name="doc_description"
+                                                                        formControlName="doc_description" maxlength="100"
+                                                                        placeholder="Enter image related descriptions"
+                                                                        required="">
+                                                                    <div class="help-block"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group  required">
+                                                                        <button mat-button (click)="fileArtist.click()" color="accent">
+                                                                                <mat-icon>add_a_photo</mat-icon>
+                                                                                Upload Image
+                                                                            </button>
+                                                                    <input type="file" title="Browse Document" (change)="fileSelectionEvent($event,i)"
+                                                                        required="" #fileArtist>
+                                                                    <div class="help-block"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="remove" *ngIf=" i!=0 ">
+                                                                <a title="Remove" (click)="removeItem(i)" class="fa fa-minus-square fa-lg text-red"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="pull-right">
+                                            <button type="" class="btn btn-sm btn-success" title="Add More" style=""
+                                                (click)="addItem()">Add More</button>
+
+                                        </div>
+                                    </div>
+                                    <!--./col-->
+                                </div>
+                                <!--./row-->
+                            </div>
+                            <!--./box-body-->
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

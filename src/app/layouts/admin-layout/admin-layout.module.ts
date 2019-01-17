@@ -38,6 +38,8 @@ import { EventComponent } from 'app/event/event.component';
 import { ImagePreviewComponent } from 'app/image-preview/image-preview.component';
 import { PerformanceComponent } from 'app/performance/performance.component';
 import { UserEditComponent } from 'app/components/user/user-edit-form.component';
+import { VideoComponent } from 'app/components/media/video/video-item-form.component';
+import { ImageComponent } from 'app/components/media/image/image-item-form.component';
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import { UserEditComponent } from 'app/components/user/user-edit-form.component'
     EventComponent,
     ImagePreviewComponent,
     PerformanceComponent,
-    UserEditComponent
+    UserEditComponent,
+    VideoComponent,
+    ImageComponent
   ],
   providers: [LoaderService, UserService]
   , entryComponents: [
