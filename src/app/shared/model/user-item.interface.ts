@@ -13,4 +13,5 @@ export interface IUserItem {
     about?: string;
     profilePicURL?: string;
     role?: string;
+    id?: string;
 }

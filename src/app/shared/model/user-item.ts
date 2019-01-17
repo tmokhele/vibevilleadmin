@@ -15,6 +15,6 @@ export class UserItem implements IUserItem {
     about?: string;
     profilePicURL?: string;
     role?: string;
+    id?: string;
 
-   
 }

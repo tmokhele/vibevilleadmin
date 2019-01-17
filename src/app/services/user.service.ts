@@ -38,7 +38,8 @@ export class UserService implements IUserService {
     }
 
     getUser(userId: string): Observable<IUserItem> {
-        throw new Error('Method not implemented.');
+        const url  = 'user/'.concat(userId);
+        return this.http.get<IUserItem>(url);
     }
     addUser(data: any): Observable<IUserItem> {
         return this.http.post<IUserItem>('user', data)
@@ -47,7 +48,7 @@ export class UserService implements IUserService {
         return this.http.post<IUserItem>('auth/register', data)
     }
     editUser(iUserItem: IUserItem): Observable<IUserItem> {
-        throw new Error('Method not implemented.');
+        return this.http.put<IUserItem>('user', iUserItem);
     }
 
     getRegistrationRequests(): Observable<AuthData[]> {
