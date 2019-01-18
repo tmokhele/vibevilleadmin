@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                     <div class="card-header card-header-danger">
-                            <h3 class="card-title"><i class="fa fa-files-o"></i>  Upload Images</h3>
+                            <h3 class="card-title"><i class="fa fa-files-o"></i>  Upload Files</h3>
                         </div>
                 <div class="card-body" id="main-form-content">
                     <form [formGroup]="documentGrp" (ngSubmit)="OnSubmit(documentGrp.value)" #uploadDocumentsForm="ngForm"
@@ -18,16 +18,19 @@
                                                 <table id="tbl-upload" class="table table-bordered  table-striped">
                                                     <tbody>
                                                         <tr *ngIf="i==0" class="active">
-                                                            <th>Image Name</th>
-                                                            <th>Image Description</th>
-                                                            <th>Image File</th>
+                                                            <th>File Type</th>
+                                                            <th>File Description</th>
+                                                            <th>Upload File</th>
                                                         </tr>
                                                         <tr>
                                                             <td>
                                                                 <div class="form-group required">
-                                                                    <input type="text" class="form-control" name="doc_name"
-                                                                        formControlName="doc_name" placeholder="Image Category"
-                                                                        required="">
+                                                                    <select (change)="onFileTypeSelectionChanged($event.target.value,i)"  name='state'  class="form-control" required="" formControlName="doc_name" style='height: 45px; width: 300px; font-family:Arial, FontAwesome;'>
+                                                                        <option value=''>&#xf039; &nbsp; File Types</option>
+                                                                        <option value='video' style='color:green;'>&#xf03d; &nbsp; Video</option>
+                                                                        <option value='image' style='color:orange;'>&#xf03e; &nbsp; Image</option>
+                                                                        <option value='audio' style='color:blue;'>&#xf001; &nbsp; Music</option>
+                                                                        </select>
                                                                     <div class="help-block"></div>
                                                                 </div>
                                                             </td>
@@ -44,10 +47,10 @@
                                                                 <div class="form-group  required">
                                                                         <button mat-button (click)="fileArtist.click()" color="accent">
                                                                                 <mat-icon>add_a_photo</mat-icon>
-                                                                                Upload Image
+                                                                                Select File
                                                                             </button>
                                                                     <input type="file" title="Browse Document" (change)="fileSelectionEvent($event,i)"
-                                                                        required="" #fileArtist>
+                                                                        required="" #fileArtist accept="{{fileFilter}}">
                                                                     <div class="help-block"></div>
                                                                 </div>
                                                             </td>

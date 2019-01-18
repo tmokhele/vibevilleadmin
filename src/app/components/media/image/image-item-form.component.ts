@@ -13,6 +13,15 @@ export class ImageComponent implements OnInit {
     public documentGrp: FormGroup;
     public totalfiles: Array<File> = [];
     public totalFileName = [];
+    public imageFilter = 'image/jpeg, .jpeg, .jfif, image/png, .png, image/pjpeg, .jpg';
+    public soundFilter = 'audio/mp3,audio/*, audio/x-m4a,audio/*';
+    public videoFilters = 'video/mp4,video/x-m4v,video/*';
+    public fileFilter = '';
+    public selectedIcon  = '';
+    public language_list  = [{'name': 'english',
+    'url': 'https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/gb.png'},
+    {'name': 'italian', 'url': 'https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/it.png'}
+    ];
     public lengthCheckToaddMore = 0;
     constructor(private formBuilder: FormBuilder,
         private multifilesService: MultifilesService
@@ -103,6 +112,31 @@ export class ImageComponent implements OnInit {
         main_form.append('fileInfo', JSON.stringify(AllFilesObj))
         this.multifilesService.saveFiles(main_form).subscribe(() => {
         })
+    }
+
+    onFileTypeSelectionChanged(fileInput: any, index) {
+        if (this.totalfiles.length !== 0) {
+               const t =  this.totalfiles[index].type;
+               if (!t.includes(fileInput)) {
+                   // this.totalfiles.splice(index);
+        // this.totalFileName.splice(index);
+
+               }
+        }
+            if (this.imageFilter.includes(fileInput)) {
+                console.log('image')
+                this.fileFilter = this.imageFilter;
+                return;
+            }
+            if (this.videoFilters.includes(fileInput)) {
+                console.log('video')
+                this.fileFilter = this.videoFilters;
+                return;
+            }
+            if (this.soundFilter.includes(fileInput)) {
+                console.log('sound')
+                this.fileFilter = this.soundFilter;
+            }
     }
 
 }

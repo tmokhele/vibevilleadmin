@@ -3,64 +3,36 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-rose">
-                        <h4 class="card-title ">User Requests</h4>
-                        <p class="card-category">Here is a list of user login requests</p>
-                    </div>
-                    <div *ngIf="registrationItems" class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead class=" text-primary">
-                                    <tr>
-                                        <th>
-                                            Requestors Name
-                                        </th>
-                                        <th>
-                                            Requestors Surname
-                                        </th>
-                                        <th>
-                                            Email
-                                        </th>
-                                        <th>
-                                            Approve
-                                        </th>
-                                        <th>
-                                            Decline
-                                        </th>
-                                    </tr>
-                                </thead>
+                    <div class="card-header card-header-tabs card-header-rose">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#event" data-toggle="tab">
+                                            <i class="material-icons">library_music</i> Audio
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
 
-                                <tbody *ngFor='let regRequest of registrationItems'>
-                                    <tr>
-                                        <td>
-                                            {{regRequest.name}}
-                                        </td>
-                                        <td>
-                                            {{regRequest.surname}}
-                                        </td>
-
-                                        <td>
-                                            {{regRequest.email}}
-                                        </td>
-
-                                        <td>
-                                            <button mat-raised-button type="button" matTooltip="Approve Request"
-                                                (click)="approve(regRequest)" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                <i class="material-icons">verified_user</i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button mat-raised-button type="button" matTooltip="Decline Request"
-                                                (click)="decline(regRequest)" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                <i class="material-icons">person_add_disabled</i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-
-                            </table>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#performances" data-toggle="tab">
+                                            <i class="material-icons">video_library</i> Video
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#performances" data-toggle="tab">
+                                            <i class="material-icons">folder_shared</i> Pictures
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+                    </div>
+                    <div class="card-body">
+                    
+
                     </div>
                 </div>
             </div>
