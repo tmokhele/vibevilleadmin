@@ -1,6 +1,9 @@
-import { Component, OnInit, Renderer } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MultifilesService } from 'app/services/multifiles.service';
+import { AlertComponent } from 'app/alert/alert-component';
+import { AlertService } from 'app/shared/alert';
+import { MatDialog } from '@angular/material';
 
 
 
@@ -17,14 +20,10 @@ export class ImageComponent implements OnInit {
     public soundFilter = 'audio/mp3,audio/*, audio/x-m4a,audio/*';
     public videoFilters = 'video/mp4,video/x-m4v,video/*';
     public fileFilter = '';
-    public selectedIcon  = '';
-    public language_list  = [{'name': 'english',
-    'url': 'https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/gb.png'},
-    {'name': 'italian', 'url': 'https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/it.png'}
-    ];
+    public selectedIcon = '';
     public lengthCheckToaddMore = 0;
     constructor(private formBuilder: FormBuilder,
-        private multifilesService: MultifilesService
+        private multifilesService: MultifilesService,  public dialog: MatDialog, public alertService: AlertService
     ) { }
 
     ngOnInit() {
@@ -92,51 +91,65 @@ export class ImageComponent implements OnInit {
     public OnSubmit(formValue: any) {
         const main_form: FormData = new FormData();
         for (let j = 0; j < this.totalfiles.length; j++) {
-            console.log('the values is ', <File>this.totalfiles[j]);
-            console.log('the name is ', this.totalFileName[j]);
-
-            main_form.append(this.totalFileName[j], <File>this.totalfiles[j])
+          console.log('the values is ', <File>this.totalfiles[j]);
+          console.log('the name is ', this.totalFileName[j]);
+          main_form.append('files', <File>this.totalfiles[j])
         }
-        console.log(formValue.items)
+        // reverseFileNames=this.totalFileName.reverse();
         const AllFilesObj = []
         formValue.items.forEach((element, index) => {
-            console.log('index is ', index);
-            console.log('element is ', element);
-            const eachObj = {
-                'doc_name': element.doc_name,
-                'doc_description': element.doc_description,
-                'file_name': this.totalFileName[index]
-            }
-            AllFilesObj.push(eachObj);
+          console.log('index is ', index);
+          console.log('element is ', element);
+          const eachObj = {
+            'docname' : element.doc_name,
+            'docdescription' : element.doc_description,
+            'filename' : this.totalFileName[index]
+          }
+          AllFilesObj.push(eachObj);
         });
+        // console.log('the Array data is ', JSON.stringify(AllFilesObj));
         main_form.append('fileInfo', JSON.stringify(AllFilesObj))
         this.multifilesService.saveFiles(main_form).subscribe(() => {
+            this.alertService.success('Documents Saved successfully')
+            const d =  this.dialog.open( AlertComponent, {
+                  width: '650px',
+              });
+            d.afterClosed().subscribe(closed => {
+              if (closed) {
+                this.alertService.clear();
+                this.documentGrp.reset();
+              }
+            })
         })
-    }
+      }
 
     onFileTypeSelectionChanged(fileInput: any, index) {
         if (this.totalfiles.length !== 0) {
-               const t =  this.totalfiles[index].type;
-               if (!t.includes(fileInput)) {
-                   // this.totalfiles.splice(index);
-        // this.totalFileName.splice(index);
+            const t = this.totalfiles[index].type;
+            if (!t.includes(fileInput)) {
+                // this.totalfiles.splice(index);
+                // this.totalFileName.splice(index);
 
-               }
+            }
         }
-            if (this.imageFilter.includes(fileInput)) {
-                console.log('image')
-                this.fileFilter = this.imageFilter;
-                return;
-            }
-            if (this.videoFilters.includes(fileInput)) {
-                console.log('video')
-                this.fileFilter = this.videoFilters;
-                return;
-            }
-            if (this.soundFilter.includes(fileInput)) {
-                console.log('sound')
-                this.fileFilter = this.soundFilter;
-            }
+        this.changeFilter(fileInput);
+    }
+
+    changeFilter(fileInput: any) {
+        if (this.imageFilter.includes(fileInput)) {
+            console.log('image')
+            this.fileFilter = this.imageFilter;
+            return;
+        }
+        if (this.videoFilters.includes(fileInput)) {
+            console.log('video')
+            this.fileFilter = this.videoFilters;
+            return;
+        }
+        if (this.soundFilter.includes(fileInput)) {
+            console.log('sound')
+            this.fileFilter = this.soundFilter;
+        }
     }
 
 }

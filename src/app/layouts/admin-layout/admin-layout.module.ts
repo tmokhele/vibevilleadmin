@@ -40,6 +40,7 @@ import { PerformanceComponent } from 'app/performance/performance.component';
 import { UserEditComponent } from 'app/components/user/user-edit-form.component';
 import { VideoComponent } from 'app/components/media/video/video-item-form.component';
 import { ImageComponent } from 'app/components/media/image/image-item-form.component';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { ImageComponent } from 'app/components/media/image/image-item-form.compo
     MatNativeDateModule,
     MatListModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxGalleryModule
   ],
   declarations: [
     DashboardComponent,

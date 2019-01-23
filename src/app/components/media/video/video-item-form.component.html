@@ -8,20 +8,23 @@
                             <div class="nav-tabs-wrapper">
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                     <li class="nav-item">
-                                        <a mat-button class="nav-link active" href="#event" data-toggle="tab">
+                                        <a mat-button class="nav-link active" href="#audio" (click)="retrieveDocuments('audio')"
+                                            data-toggle="tab">
                                             <i class="material-icons">library_music</i> Audio
                                             <div class="ripple-container"></div>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#performances" data-toggle="tab">
+                                        <a mat-button class="nav-link" href="#video" (click)="retrieveDocuments('video')"
+                                            data-toggle="tab">
                                             <i class="material-icons">video_library</i> Video
                                             <div class="ripple-container"></div>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#performances" data-toggle="tab">
+                                        <a mat-button class="nav-link" href="#image" (click)="retrieveDocuments('image')"
+                                            data-toggle="tab">
                                             <i class="material-icons">folder_shared</i> Pictures
                                             <div class="ripple-container"></div>
                                         </a>
@@ -31,7 +34,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                    
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="image">
+                                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
