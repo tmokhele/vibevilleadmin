@@ -2,12 +2,12 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header card-header-rose">
-        <div *ngIf="!data.edit">
+        <div *ngIf="!isEdit">
             <h4 class="card-title">Create System User</h4>
             <p class="card-category">New user and login profile</p>
         </div>
 
-        <div *ngIf="data.edit">
+        <div *ngIf="isEdit">
             <h4 class="card-title">Update System User</h4>
             <p class="card-category">Existing user profile</p>
         </div>

@@ -16,6 +16,9 @@
                                          Name
                                         </th>
                                         <th>
+                                            Surname
+                                           </th>
+                                        <th>
                                             Email
                                         </th>
                                         <th>
@@ -37,10 +40,14 @@
                                         </td>
 
                                         <td>
-                                            {{regRequest.email}}
+                                            {{regRequest.surname}}
+                                        </td>
+
+                                        <td>
+                                            {{regRequest.emailAddress}}
                                         </td>
                                         <td>
-                                            {{regRequest.phone}}
+                                            {{regRequest.contactNumber}}
                                         </td>
                                         <td>
                                             <button mat-raised-button type="button" matTooltip="Edit"
@@ -51,7 +58,7 @@
                                         <td>
                                             <button mat-raised-button type="button" matTooltip="Delete"
                                                 (click)="decline(regRequest)" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                <i class="material-icons">person_add_disabled</i>
+                                                <i class="material-icons">delete</i>
                                             </button>
                                         </td>
                                     </tr>

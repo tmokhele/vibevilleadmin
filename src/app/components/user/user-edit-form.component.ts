@@ -28,6 +28,7 @@ export class UserEditComponent implements OnInit {
     ngOnInit(): void {
         this.userService.getUsers().subscribe(regItems => {
             this.userItems = regItems;
+            console.log('user items: ' + JSON.stringify(this.userItems))
         })
     }
 
