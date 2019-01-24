@@ -41,6 +41,10 @@ import { UserEditComponent } from 'app/components/user/user-edit-form.component'
 import { VideoComponent } from 'app/components/media/video/video-item-form.component';
 import { ImageComponent } from 'app/components/media/image/image-item-form.component';
 import { NgxGalleryModule } from 'ngx-gallery';
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
 
 @NgModule({
   imports: [
@@ -63,7 +67,11 @@ import { NgxGalleryModule } from 'ngx-gallery';
     MatListModule,
     MatStepperModule,
     MatCheckboxModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgCoreModule
   ],
   declarations: [
     DashboardComponent,
@@ -88,7 +96,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
   , entryComponents: [
     FormComponent,
     ImagePreviewComponent,
-    PerformanceComponent
+    PerformanceComponent,
+    TypographyComponent
 ]
 })
 

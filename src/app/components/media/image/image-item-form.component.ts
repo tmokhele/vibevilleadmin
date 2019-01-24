@@ -4,6 +4,7 @@ import { MultifilesService } from 'app/services/multifiles.service';
 import { AlertComponent } from 'app/alert/alert-component';
 import { AlertService } from 'app/shared/alert';
 import { MatDialog } from '@angular/material';
+import { LoaderService } from 'app/services/loader.service';
 
 
 
@@ -23,7 +24,8 @@ export class ImageComponent implements OnInit {
     public selectedIcon = '';
     public lengthCheckToaddMore = 0;
     constructor(private formBuilder: FormBuilder,
-        private multifilesService: MultifilesService,  public dialog: MatDialog, public alertService: AlertService
+        private multifilesService: MultifilesService,  public dialog: MatDialog
+        , public alertService: AlertService, private loaderService: LoaderService
     ) { }
 
     ngOnInit() {
@@ -68,9 +70,11 @@ export class ImageComponent implements OnInit {
     }
 
     public fileSelectionEvent(fileInput: any, oldIndex) {
+        console.log('123')
+        this.loaderService.display(true);
         if (fileInput.target.files && fileInput.target.files[0]) {
             const reader = new FileReader();
-            reader.onload = () => {
+            reader.onloadend = () => {
             }
             if (oldIndex === 0) {
                 this.totalfiles.unshift((fileInput.target.files[0]))
@@ -103,11 +107,11 @@ export class ImageComponent implements OnInit {
           const eachObj = {
             'docname' : element.doc_name,
             'docdescription' : element.doc_description,
-            'filename' : this.totalFileName[index]
+            'filename' : this.totalFileName[index],
+            'filetype' : this.totalfiles[index].type
           }
           AllFilesObj.push(eachObj);
         });
-        // console.log('the Array data is ', JSON.stringify(AllFilesObj));
         main_form.append('fileInfo', JSON.stringify(AllFilesObj))
         this.multifilesService.saveFiles(main_form).subscribe(() => {
             this.alertService.success('Documents Saved successfully')

@@ -17,11 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-typography',
   templateUrl: './typography.component.html',
-  styleUrls: ['./typography.component.css'],
-  providers: [
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} }
-]
+  styleUrls: ['./typography.component.css']
 })
 export class TypographyComponent implements OnInit {
   firstFormGroup: FormGroup;
@@ -37,7 +33,7 @@ export class TypographyComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
   constructor(public dialog: MatDialog, private _formBuilder: FormBuilder,
-    private userService: UserService, public alertService: AlertService,  @Inject(MAT_DIALOG_DATA) public data: any) {
+    private userService: UserService, public alertService: AlertService, @Inject(MAT_DIALOG_DATA) public data: any) {
      this.userInfo.emailAddress = data.email;
      this.userInfo.password = data.password;
      this.userInfo.name = data.name;

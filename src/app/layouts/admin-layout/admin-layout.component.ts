@@ -11,7 +11,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit {
+export class AdminLayoutComponent implements OnInit, AfterViewInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
@@ -31,19 +31,21 @@ export class AdminLayoutComponent implements OnInit {
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
       const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
 
-      this.location.subscribe((ev:PopStateEvent) => {
+      this.location.subscribe((ev: PopStateEvent) => {
           this.lastPoppedUrl = ev.url;
       });
-       this.router.events.subscribe((event:any) => {
+       this.router.events.subscribe((event: any) => {
           if (event instanceof NavigationStart) {
-             if (event.url != this.lastPoppedUrl)
+             if (event.url !== this.lastPoppedUrl) {
                  this.yScrollStack.push(window.scrollY);
+             }
          } else if (event instanceof NavigationEnd) {
-             if (event.url == this.lastPoppedUrl) {
+             if (event.url === this.lastPoppedUrl) {
                  this.lastPoppedUrl = undefined;
                  window.scrollTo(0, this.yScrollStack.pop());
-             } else
+             } else {
                  window.scrollTo(0, 0);
+             }
          }
       });
       this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
@@ -58,13 +60,12 @@ export class AdminLayoutComponent implements OnInit {
   ngAfterViewInit() {
       this.runOnRouteChange();
   }
-  isMaps(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
+  isMaps(path) {
+      let titlee = this.location.prepareExternalUrl(this.location.path());
       titlee = titlee.slice( 1 );
-      if(path == titlee){
+      if (path === titlee) {
           return false;
-      }
-      else {
+      } else {
           return true;
       }
   }

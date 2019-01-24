@@ -12,17 +12,28 @@ export class RequestInterceptor implements HttpInterceptor {
     , private router: Router, private errorHandler: GlobalErrorHandler) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://18.191.97.142:8086/api/'+req.url;
-    // var url ='http://localhost:8086/api/'+req.url;
+    const url = 'http://18.191.97.142:8086/api/' + req.url;
+    // var url = 'http://localhost:8086/api/' + req.url;
     const token = this.auth.getToken();
-    const authReq = req.clone({
-      url: url,
-      setHeaders:
-      {
-        'Authorization': `Bearer `+token,
-        'Content-Type': 'application/json'
-      }
-    });
+    let authReq
+    if (req.url !== 'files') {
+      authReq = req.clone({
+        url: url,
+        setHeaders:
+        {
+          'Authorization': `Bearer ` + token,
+          'Content-Type': 'application/json'
+        }
+      });
+    } else {
+      authReq = req.clone({
+        url: url,
+        setHeaders:
+        {
+          'Authorization': `Bearer ` + token
+        }
+      });
+    }
     this.loaderService.display(true);
     return next.handle(authReq).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {

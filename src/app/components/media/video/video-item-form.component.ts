@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthData } from 'app/shared/model/auth-data.model';
-import { UserService } from 'app/services/user.service';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
-import { TypographyComponent } from 'app/typography/typography.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationDialogComponent } from 'app/alert/delete-component';
 import { AlertService } from 'app/shared/alert';
-import { AlertComponent } from 'app/alert/alert-component';
 import { MultifilesService } from 'app/services/multifiles.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 
@@ -21,11 +17,14 @@ export class VideoComponent implements OnInit {
     registrationItems: AuthData[];
     public columnCount: number;
     public baseImageUrl: any = 'data:image/png;base64,'
+    public baseVideoUrl: any = 'video:mp4;base64,'
+    public videoUrl = ' '
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
     public galleryOptions: NgxGalleryOptions[] = [];
     public galleryImages: NgxGalleryImage[] = [];
+    public videoUrls: string[] = [];
     constructor(
-        private route: ActivatedRoute, private multifilesService: MultifilesService,
+        private multifilesService: MultifilesService,
         public dialog: MatDialog, public alertService: AlertService
     ) {
 
@@ -34,6 +33,7 @@ export class VideoComponent implements OnInit {
     ngOnInit(): void {
         this.retrieveDocuments('audio')
         this.galleryOptions = [
+
             {
                 width: '600px',
                 height: '400px',
@@ -61,24 +61,32 @@ export class VideoComponent implements OnInit {
 
     retrieveDocuments(documentType: any) {
         this.multifilesService.getFiles(documentType).subscribe(documents => {
-            documents.forEach(a => {
+            documents.forEach((a, b) => {
                 if (documentType === 'image') {
                     this.columnCount = this.columnCount + 1;
-                    const url = this.baseImageUrl + a;
+                    // const url = this.baseImageUrl + a;
                     const img = {
-                        'big': url,
-                        'small': url,
-                        'medium': url
+                        'big': a,
+                        'small': a,
+                        'medium': a
                     }
                     console.log('img ' + this.columnCount)
                     this.galleryImages.push(img);
                 }
+                if (documentType === 'video') {
+                    // const url = this.baseVideoUrl + a;
+                    this.videoUrls.push(a);
+                }
             })
+            if (this.videoUrls.length > 0) {
+                this.videoUrl = this.videoUrls[0]
+                console.log('vid url: '.concat(this.videoUrl))
+            }
         })
     }
 
 
-    decline(auth: any) {
+    decline() {
         this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             disableClose: false
         });

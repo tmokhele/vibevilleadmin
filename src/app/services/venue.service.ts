@@ -66,7 +66,7 @@ export class VenueService implements IShopService {
     }
 
     getShopItem(id: string): Observable<IShopItem> {
-        return this.http.get<IShopItem>('event/' + id + '/detail')
+        return this.http.get<IShopItem>('event/'.concat(id).concat('/detail'))
     }
 
     addShopItem(body: any): Observable<IShopItem> {

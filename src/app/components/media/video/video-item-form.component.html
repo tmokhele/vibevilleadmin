@@ -35,8 +35,27 @@
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="tab-pane active" id="image">
-                                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                            <div class="tab-pane" id="image">
+                                <div *ngIf="galleryImages.length>0" class="row h-100 justify-content-center align-items-center">
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="video">
+                                <div class="row h-100 justify-content-center align-items-center">
+                                   
+                                        <vg-player>
+                                            <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+                                                <source [src]="videoUrl" type="video/mp4">
+                                            </video>
+                                        </vg-player>
+                                    
+                                </div>
+                            </div>
+                            <div class="tab-pane active" id="audio">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

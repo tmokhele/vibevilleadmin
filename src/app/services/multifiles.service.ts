@@ -13,7 +13,7 @@ export class MultifilesService {
   }
 
   getFiles(documentType: any) {
-    return this.http.get<[any]>('files/'.concat(documentType));
+    return this.http.get<Map<string, string>>('files/'.concat(documentType));
   }
 
 }

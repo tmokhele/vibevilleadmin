@@ -26,7 +26,6 @@ export class UserService implements IUserService {
 
         network.subscribe(
             userItems => {
-                console.log('users' + JSON.stringify(userItems))
                 this.subject.next(userItems);
             },
             (err) => {

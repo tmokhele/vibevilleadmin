@@ -34,6 +34,7 @@ export class UserEditComponent implements OnInit {
     approve(auth: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
+        auth.edit = true;
         dialogConfig.data = auth
         const d = this.dialog.open(TypographyComponent, dialogConfig);
         const sub = d.componentInstance.onAdd.subscribe(result => {
