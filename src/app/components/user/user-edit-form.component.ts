@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit {
     ngOnInit(): void {
         this.userService.getUsers().subscribe(regItems => {
             this.userItems = regItems;
-            console.log('user items: ' + JSON.stringify(this.userItems))
         })
     }
 
@@ -53,14 +52,15 @@ export class UserEditComponent implements OnInit {
           this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?'
           this.dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.userService.deleteUser(auth).subscribe(() => {
+                this.userService.deleteUserInfo(auth).subscribe(() => {
                     this.alertService.success('Record deleted successfully')
                     const d =  this.dialog.open( AlertComponent, {
                           width: '650px',
                       });
                     d.afterClosed().subscribe(closed => {
                       if (closed) {
-                        this.userItems = this.userItems.filter(item => item.uid === auth.userId);
+                          const index = this.userItems.indexOf(auth);
+                        this.userItems.splice(index, 1);
                         this.alertService.clear();
                       }
                     })

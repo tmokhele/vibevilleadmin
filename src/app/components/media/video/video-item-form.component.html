@@ -37,31 +37,115 @@
                         <div class="tab-content">
                             <div class="tab-pane" id="image">
                                 <div *ngIf="galleryImages.length>0" class="row h-100 justify-content-center align-items-center">
-                                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" crossorigin="anonymous"></ngx-gallery>
                                 </div>
                             </div>
                             <div class="tab-pane" id="video">
-                                <div class="row h-100 justify-content-center align-items-center">
-                                   
-                                        <vg-player>
-                                            <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
-                                                <source [src]="videoUrl" type="video/mp4">
-                                            </video>
-                                        </vg-player>
-                                    
+                                <div class="col-md-12">
+
+                                    <div class="row" *ngIf="currentItem">
+
+                                        <div class="col-md-9">
+                                            <vg-player (onPlayerReady)="onPlayerReady($event)">
+                                                <video #media [vgMedia]="media" [src]="currentItem?.source" id="singleVideo"
+                                                    preload="auto" controls autoplay crossorigin>
+                                                </video>
+                                            </vg-player>
+                                        </div>
+                                        <mat-list dense class="col-md-3">
+                                            <h1 mat-subheader>Video Play List</h1>
+                                            <mat-list-item *ngFor="let stream of vids; let $index = index">
+                                                <div *ngIf="api?.state ==='playing' && currentItem.label !== stream.label">
+                                                    <button mat-icon-button (click)="onClickPLaylistItem(stream, $index)">
+                                                        <mat-icon style='color:green;'>play_circle_filled</mat-icon>
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="api?.state !=='playing' && currentItem.label === stream.label">
+                                                    <button mat-icon-button (click)="onClickPLaylistItem(stream, $index)">
+                                                        <mat-icon style='color:green;'>play_circle_filled</mat-icon>
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="api?.state ==='playing' && currentItem.label === stream.label">
+                                                    <button mat-icon-button (click)="onClickPLaylistItem(stream, $index)">
+                                                        <mat-icon style='color:orange;'>pause_circle_outline</mat-icon>
+                                                    </button>
+
+
+                                                </div>
+
+                                                <div *ngIf="api?.state !=='playing' && currentItem.label !== stream.label">
+                                                    <button mat-icon-button (click)="onClickPLaylistItem(stream, $index)">
+                                                        <mat-icon style='color:green;'>play_circle_filled</mat-icon>
+                                                    </button>
+
+
+                                                </div>
+
+                                                <mat-icon mat-list-icon style='color:rgb(0, 89, 255);'>ondemand_video</mat-icon>
+                                                <h4 mat-line>{{stream.label}}</h4>
+                                                <mat-divider [inset]="true"></mat-divider>
+                                            </mat-list-item>
+
+                                        </mat-list>
+                                    </div>
+
+
+
+
                                 </div>
                             </div>
                             <div class="tab-pane active" id="audio">
-                                <div class="row">
-                                    <div class="col-md-12">
+
+                                <div class="col-md-12">
+                                    <div class="row" *ngIf="currentItem">
+                                        <div class="col-md-7">
+                                            <mat-list dense class="col-md-7">
+                                                <h1 mat-subheader>Music Play List</h1>
+                                                <mat-list-item *ngFor="let item of playlist; let $index = index">
+                                                    <button mat-icon-button (click)="onClickPLaylistItem(item, $index)">
+                                                        <mat-icon style='color:green;'>play_circle_filled</mat-icon>
+                                                    </button>
+                                                    <mat-icon mat-list-icon style='color:rgb(0, 89, 255);'>queue_music</mat-icon>
+                                                    <h4 mat-line>{{item.label}}</h4>
+                                                    <mat-divider [inset]="true"></mat-divider>
+                                                </mat-list-item>
+                                            </mat-list>
+
+                                            <!-- <button mat-raised-button (click)="onClickPLaylistItem(item, $index); api.play()" *ngFor="let item of playlist; let $index = index">
+                                                        {{ item.label }}
+                                                    
+                                                      </button> -->
+                                        </div>
+                                        <div class="col-md-5">
+                                            <vg-player (onPlayerReady)="onMusicPlayerReady($event)" style="height: 50px;">
+
+                                                <vg-controls>
+                                                    <vg-play-pause></vg-play-pause>
+                                                    <vg-playback-button></vg-playback-button>
+
+                                                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                                                    <vg-scrub-bar>
+                                                        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                                                        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                                                    </vg-scrub-bar>
+
+                                                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                                                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                                                    <vg-mute></vg-mute>
+
+                                                    <vg-fullscreen></vg-fullscreen>
+                                                </vg-controls>
+                                                <audio #media [vgMedia]="media" [src]="currentItem.source" id="modalPlayer"
+                                                    preload="none"></audio>
+                                            </vg-player>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>

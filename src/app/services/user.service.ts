@@ -20,6 +20,10 @@ export class UserService implements IUserService {
     deleteUser(request: any):  Observable<AuthData> {
        return this.http.post<AuthData>('user/remove', request)
     }
+
+    deleteUserInfo(auth: any): any {
+        return this.http.post<AuthData>('user/delete', auth)
+    }
     getUsers(): Observable<IUserItem[]> {
         const network = this.http.get<IUserItem[]>('user/all').publishReplay(1, 5000)
             .refCount();

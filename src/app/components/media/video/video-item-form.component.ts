@@ -5,8 +5,14 @@ import { ConfirmationDialogComponent } from 'app/alert/delete-component';
 import { AlertService } from 'app/shared/alert';
 import { MultifilesService } from 'app/services/multifiles.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { VgAPI } from 'videogular2/core';
 
 
+export class IMedia {
+    source: string;
+    label: string;
+    type: string;
+}
 
 @Component({
     selector: 'app-video-item-form',
@@ -18,11 +24,16 @@ export class VideoComponent implements OnInit {
     public columnCount: number;
     public baseImageUrl: any = 'data:image/png;base64,'
     public baseVideoUrl: any = 'video:mp4;base64,'
-    public videoUrl = ' '
+    public videoUrl = ''
+    api: VgAPI;
+    currentIndex = 0;
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
     public galleryOptions: NgxGalleryOptions[] = [];
     public galleryImages: NgxGalleryImage[] = [];
     public videoUrls: string[] = [];
+    public vids: IMedia[] = new Array<IMedia>();
+    public playlist: IMedia[] = new Array<IMedia>();
+    public currentItem: IMedia = this.vids[this.currentIndex]
     constructor(
         private multifilesService: MultifilesService,
         public dialog: MatDialog, public alertService: AlertService
@@ -60,31 +71,46 @@ export class VideoComponent implements OnInit {
     }
 
     retrieveDocuments(documentType: any) {
+        this.galleryImages = []
+        this.vids = []
+        this.playlist = []
         this.multifilesService.getFiles(documentType).subscribe(documents => {
-            documents.forEach((a, b) => {
+            Object.keys(documents).forEach(key => {
                 if (documentType === 'image') {
                     this.columnCount = this.columnCount + 1;
-                    // const url = this.baseImageUrl + a;
                     const img = {
-                        'big': a,
-                        'small': a,
-                        'medium': a
+                        'big': documents[key],
+                        'small': documents[key],
+                        'medium': documents[key]
                     }
-                    console.log('img ' + this.columnCount)
                     this.galleryImages.push(img);
                 }
                 if (documentType === 'video') {
-                    // const url = this.baseVideoUrl + a;
-                    this.videoUrls.push(a);
+                    const media = this.getMedia(key, documents);
+                    this.vids.push(media);
+                    this.currentItem = this.vids[this.currentIndex]
+                } else {
+                    const media = this.getMedia(key, documents);
+                    this.playlist.push(media);
+                    this.currentItem = this.playlist[this.currentIndex]
                 }
             })
-            if (this.videoUrls.length > 0) {
-                this.videoUrl = this.videoUrls[0]
-                console.log('vid url: '.concat(this.videoUrl))
-            }
         })
     }
 
+    private getMedia(key: string, documents: Map<string, string>) {
+        const a = key.substring(key.indexOf('/') + 1);
+        const media = new IMedia();
+        media.source = documents[key];
+        media.label = a;
+        media.type = key.slice(-3);
+        return media;
+    }
+
+    onClickPLaylistItem(item: IMedia, index: number) {
+        this.currentIndex = index;
+        this.currentItem = item;
+    }
 
     decline() {
         this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -109,6 +135,34 @@ export class VideoComponent implements OnInit {
             }
             this.dialogRef = null;
         });
+    }
+    onPlayerReady(api: VgAPI) {
+        this.api = api;
+        this.api.getDefaultMedia().currentTime = 0;
+        this.api.getDefaultMedia().subscriptions.loadedMetadata.subscribe(this.playVideo.bind(this));
+        this.api.getDefaultMedia().subscriptions.ended.subscribe(this.nextVideo.bind(this));
+    }
+
+    onMusicPlayerReady(api: VgAPI) {
+        this.api = api;
+        this.api.getDefaultMedia().subscriptions.ended.subscribe(() => {
+            // Set the audio to the beginning
+            this.api.getDefaultMedia().currentTime = 0;
+        });
+    }
+
+    nextVideo() {
+        this.currentIndex++;
+
+        if (this.currentIndex === this.vids.length) {
+            this.currentIndex = 0;
+        }
+
+        this.currentItem = this.vids[this.currentIndex];
+    }
+
+    playVideo() {
+        this.api.play();
     }
 
 }

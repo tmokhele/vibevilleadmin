@@ -8,4 +8,5 @@ export interface IUserService {
     addUser(IUserItem): Observable<IUserItem>;
     editUser(IUserItem): Observable<IUserItem>;
     deleteUser(userId: any): Observable<Object>;
+    deleteUserInfo(userId: any): Observable<Object>;
 }
