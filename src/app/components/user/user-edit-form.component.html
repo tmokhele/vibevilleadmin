@@ -8,9 +8,18 @@
                         <p class="card-category">Here is a list of user profiles</p>
                     </div>
                     <div *ngIf="userItems" class="card-body">
+                            <div class="row">
+                        <div class="col-md-1">
+                            <a mat-icon-button disabled>
+                                <mat-icon>search</mat-icon>
+                            </a>
+                        </div>
+                        <div class="col-md-9">
                         <mat-form-field>
                             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
                         </mat-form-field>
+                        </div>
+                        </div>
                         <mat-table [dataSource]="dataSource" matSort>
 
                             <!-- ID Column -->
@@ -40,23 +49,23 @@
 
                             <ng-container matColumnDef="edit">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-                                <mat-cell *matCellDef="let row" >
-                                        <button mat-raised-button type="button" matTooltip="Edit" (click)="approve(row)"
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-raised-button type="button" matTooltip="Edit" (click)="approve(row)"
                                         [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
                                         <i class="material-icons">verified_user</i>
                                     </button></mat-cell>
-                         
+
                             </ng-container>
 
                             <ng-container matColumnDef="delete">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-                                    <mat-cell *matCellDef="let row">
-                                            <button mat-raised-button type="button" matTooltip="Delete" (click)="decline(row)"
-                                            [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                            <i class="material-icons">delete</i>
-                                        </button></mat-cell>
-                             
-                                </ng-container>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-raised-button type="button" matTooltip="Delete" (click)="decline(row)"
+                                        [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                        <i class="material-icons">delete</i>
+                                    </button></mat-cell>
+
+                            </ng-container>
 
                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                             <mat-row *matRowDef="let row; columns: displayedColumns;">

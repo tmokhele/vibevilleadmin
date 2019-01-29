@@ -15,32 +15,40 @@ import { IUserItem } from 'app/shared/model/user-item.interface';
     templateUrl: './user-edit-form.component.html',
     styleUrls: ['./user-edit-form.component.css'],
 })
-export class UserEditComponent implements AfterViewInit {
-    displayedColumns = ['name', 'surname', 'email', 'phone', 'edit' , 'delete'];
+export class UserEditComponent implements AfterViewInit, OnInit {
+    displayedColumns = ['name', 'surname', 'email', 'phone', 'edit', 'delete'];
     dataSource: MatTableDataSource<IUserItem>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
-    userItems: IUserItem[];
+    userItems: IUserItem[] = [];
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
     constructor(
         private route: ActivatedRoute, public userService: UserService,
         public dialog: MatDialog, public alertService: AlertService
     ) {
+        this.getUsers();
+    }
+
+    getUsers() {
         this.userService.getUsers().subscribe(regItems => {
             this.userItems = regItems;
             this.dataSource = new MatTableDataSource(this.userItems)
         })
     }
 
+    ngOnInit() {
+        this.getUsers()
+    }
+
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      }
-      applyFilter(filterValue: string) {
-        filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    }
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim();
+        filterValue = filterValue.toLowerCase();
         this.dataSource.filter = filterValue;
-      }
+    }
     approve(auth: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
@@ -58,27 +66,27 @@ export class UserEditComponent implements AfterViewInit {
     decline(auth: any) {
         this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             disableClose: false
-          });
-          this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?'
-          this.dialogRef.afterClosed().subscribe(result => {
+        });
+        this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?'
+        this.dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.userService.deleteUserInfo(auth).subscribe(() => {
                     this.alertService.success('Record deleted successfully')
-                    const d =  this.dialog.open( AlertComponent, {
-                          width: '650px',
-                      });
+                    const d = this.dialog.open(AlertComponent, {
+                        width: '650px',
+                    });
                     d.afterClosed().subscribe(closed => {
-                      if (closed) {
-                          const index = this.userItems.indexOf(auth);
-                        this.userItems.splice(index, 1);
-                        this.dataSource = new MatTableDataSource(this.userItems)
-                        this.alertService.clear();
-                      }
+                        if (closed) {
+                            const index = this.userItems.indexOf(auth);
+                            this.userItems.splice(index, 1);
+                            this.dataSource = new MatTableDataSource(this.userItems)
+                            this.alertService.clear();
+                        }
                     })
                 })
             }
             this.dialogRef = null;
-          });
+        });
     }
 
 }

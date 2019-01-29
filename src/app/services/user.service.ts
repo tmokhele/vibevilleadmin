@@ -25,11 +25,13 @@ export class UserService implements IUserService {
         return this.http.post<AuthData>('user/delete', auth)
     }
     getUsers(): Observable<IUserItem[]> {
+        if (sessionStorage.getItem('users') === null) {
         const network = this.http.get<IUserItem[]>('user/all').publishReplay(1, 5000)
             .refCount();
 
         network.subscribe(
             userItems => {
+                sessionStorage.setItem('users', JSON.stringify(userItems));
                 this.subject.next(userItems);
             },
             (err) => {
@@ -38,6 +40,14 @@ export class UserService implements IUserService {
         );
 
         return network;
+        } else {
+            const a = JSON.parse(sessionStorage.getItem('users'));
+            return new Observable((observer) => {
+                // observable execution
+                observer.next(a)
+                observer.complete()
+            })
+        }
     }
 
     getUser(userId: string): Observable<IUserItem> {

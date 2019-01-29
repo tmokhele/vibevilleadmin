@@ -1,11 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, EventEmitter, Output, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { VenueService } from '../services/venue.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IShopItem } from '../shared/model/shop-item.interface';
 import { AlertService } from 'app/shared/alert';
 import { Router } from '@angular/router';
-import { EventItem } from 'app/shared/model/event-item';
 
 
 @Component({
@@ -13,14 +12,18 @@ import { EventItem } from 'app/shared/model/event-item';
     templateUrl: './table-list.component.html',
     styleUrls: ['./table-list.component.css']
 })
-export class TableListComponent implements OnInit {
-    public shopItems$: Observable<IShopItem[]>;
+export class TableListComponent implements OnInit, AfterViewInit {
+    displayedColumns = ['name', 'category', 'location', 'charge', 'edit', 'delete'];
+    dataSource: MatTableDataSource<IShopItem>;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    public shopItems: IShopItem[] = [];
     public filterBy;
     public event: IShopItem;
     constructor(public dialog: MatDialog, public venue: VenueService, public alertService: AlertService, public router: Router) {
         this.venue.clearEvent();
         this.geEventList(null);
-     }
+    }
 
     ngOnInit() {
         this.venue.clearEvent();
@@ -28,19 +31,24 @@ export class TableListComponent implements OnInit {
     }
 
     geEventList(arg0: null): any {
-        this.shopItems$ = this.venue.getShopItems();
+        this.venue.getShopItems().subscribe(events => {
+            this.shopItems = events;
+            this.dataSource = new MatTableDataSource(this.shopItems)
+        });
+    }
+
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim();
+        filterValue = filterValue.toLowerCase();
+        this.dataSource.filter = filterValue;
     }
 
     openDialog(shopItem?): void {
         this.router.navigate(['/event']);
-    }
-
-    previewImage(imgUrl: any) {
-
-    }
-
-    addImage(event: any) {
-
     }
 
     editEvent(event: any) {
