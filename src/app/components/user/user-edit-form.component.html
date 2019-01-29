@@ -8,65 +8,62 @@
                         <p class="card-category">Here is a list of user profiles</p>
                     </div>
                     <div *ngIf="userItems" class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead class=" text-primary">
-                                    <tr>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Surname
-                                        </th>
-                                        <th>
-                                            Email
-                                        </th>
-                                        <th>
-                                            Phone
-                                        </th>
-                                        <th>
-                                            Edit
-                                        </th>
-                                        <th>
-                                            Delete
-                                        </th>
-                                    </tr>
-                                </thead>
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                        <mat-table [dataSource]="dataSource" matSort>
 
-                                <tbody *ngFor='let regRequest of userItems'>
-                                    <tr>
-                                        <td>
-                                            {{regRequest.name}}
-                                        </td>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
 
-                                        <td>
-                                            {{regRequest.surname}}
-                                        </td>
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="surname">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Surname </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.surname}}</mat-cell>
+                            </ng-container>
 
-                                        <td>
-                                            {{regRequest.emailAddress}}
-                                        </td>
-                                        <td>
-                                            {{regRequest.contactNumber}}
-                                        </td>
-                                        <td>
-                                            <button mat-raised-button type="button" matTooltip="Edit" (click)="approve(regRequest)"
-                                                [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                <i class="material-icons">verified_user</i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button mat-raised-button type="button" matTooltip="Delete" (click)="decline(regRequest)"
-                                                [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="email">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.emailAddress}} </mat-cell>
+                            </ng-container>
 
+                            <!-- Color Column -->
+                            <ng-container matColumnDef="phone">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.color]="row.contactNumber">
+                                    {{row.contactNumber}} </mat-cell>
+                            </ng-container>
 
-                            </table>
-                        </div>
+                            <ng-container matColumnDef="edit">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+                                <mat-cell *matCellDef="let row" >
+                                        <button mat-raised-button type="button" matTooltip="Edit" (click)="approve(row)"
+                                        [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                        <i class="material-icons">verified_user</i>
+                                    </button></mat-cell>
+                         
+                            </ng-container>
+
+                            <ng-container matColumnDef="delete">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                            <button mat-raised-button type="button" matTooltip="Delete" (click)="decline(row)"
+                                            [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">delete</i>
+                                        </button></mat-cell>
+                             
+                                </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                     </div>
                 </div>
             </div>

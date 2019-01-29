@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'app/services/user.service';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { TypographyComponent } from 'app/typography/typography.component';
 import { ConfirmationDialogComponent } from 'app/alert/delete-component';
 import { AlertService } from 'app/shared/alert';
@@ -15,22 +15,32 @@ import { IUserItem } from 'app/shared/model/user-item.interface';
     templateUrl: './user-edit-form.component.html',
     styleUrls: ['./user-edit-form.component.css'],
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements AfterViewInit {
+    displayedColumns = ['name', 'surname', 'email', 'phone', 'edit' , 'delete'];
+    dataSource: MatTableDataSource<IUserItem>;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
     userItems: IUserItem[];
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
     constructor(
         private route: ActivatedRoute, public userService: UserService,
         public dialog: MatDialog, public alertService: AlertService
     ) {
-
-    }
-
-    ngOnInit(): void {
         this.userService.getUsers().subscribe(regItems => {
             this.userItems = regItems;
+            this.dataSource = new MatTableDataSource(this.userItems)
         })
     }
 
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+      applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+      }
     approve(auth: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
@@ -61,6 +71,7 @@ export class UserEditComponent implements OnInit {
                       if (closed) {
                           const index = this.userItems.indexOf(auth);
                         this.userItems.splice(index, 1);
+                        this.dataSource = new MatTableDataSource(this.userItems)
                         this.alertService.clear();
                       }
                     })

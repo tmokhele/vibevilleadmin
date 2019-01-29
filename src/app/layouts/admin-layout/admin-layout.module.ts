@@ -27,7 +27,10 @@ import {
   MatListModule,
   MatStepperModule,
   MatCheckboxModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatTableDataSource,
+  MatTableModule,
+  MatPaginatorModule
 } from '@angular/material';
 import { FormComponent } from '../../components/shop-item-form/shop-item-form.component';
 import { LoaderService } from '../../services/loader.service';
@@ -71,7 +74,9 @@ import {VgBufferingModule} from 'videogular2/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgCoreModule
+    VgCoreModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   declarations: [
     DashboardComponent,
