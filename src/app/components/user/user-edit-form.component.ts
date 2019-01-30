@@ -31,13 +31,20 @@ export class UserEditComponent implements AfterViewInit, OnInit {
 
     getUsers() {
         this.userService.getUsers().subscribe(regItems => {
+            const a = JSON.parse(sessionStorage.getItem('currentUserInfo'));
             this.userItems = regItems;
+            this.userItems.forEach(e => {
+                if (e.emailAddress === a.emailAddress) {
+                    this.userItems.splice(this.userItems.indexOf(e), 1);
+
+                }
+            })
             this.dataSource = new MatTableDataSource(this.userItems)
         })
     }
 
     ngOnInit() {
-        this.getUsers()
+        // this.getUsers()
     }
 
     ngAfterViewInit() {
