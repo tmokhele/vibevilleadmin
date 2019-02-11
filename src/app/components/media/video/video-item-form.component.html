@@ -37,7 +37,7 @@
                         <div class="tab-content">
                             <div class="tab-pane" id="image">
                                 <div *ngIf="galleryImages.length>0" class="row h-100 justify-content-center align-items-center">
-                                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" crossorigin="anonymous"></ngx-gallery>
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" crossorigin="anonymous"><a></a></ngx-gallery>
                                 </div>
                             </div>
                             <div class="tab-pane" id="video">
@@ -80,6 +80,9 @@
 
 
                                                 </div>
+                                                <button mat-icon-button (click)="onClickDeleteItem(stream, $index)">
+                                                    <mat-icon style='color:darkred;'>delete</mat-icon>
+                                                </button>
 
                                                 <mat-icon mat-list-icon style='color:rgb(0, 89, 255);'>ondemand_video</mat-icon>
                                                 <h4 mat-line>{{stream.label}}</h4>
@@ -104,6 +107,9 @@
                                                 <mat-list-item *ngFor="let item of playlist; let $index = index">
                                                     <button mat-icon-button (click)="onClickPLaylistItem(item, $index); api.play()">
                                                         <mat-icon style='color:green;'>play_circle_filled</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button (click)="onClickDeleteItem(item, $index)">
+                                                        <mat-icon style='color:darkred;'>delete</mat-icon>
                                                     </button>
                                                     <mat-icon mat-list-icon style='color:rgb(0, 89, 255);'>queue_music</mat-icon>
                                                     <h4 mat-line>{{item.label}}</h4>

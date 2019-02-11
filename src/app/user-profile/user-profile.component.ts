@@ -59,6 +59,7 @@ export class UserProfileComponent {
         this.user.surname = this.userItemForm.get('surname').value;
         this.user.emailAddress = this.userItemForm.get('email').value;
         this.userService.editUser(this.user).subscribe(e => {
+            sessionStorage.setItem('currentUserInfo', JSON.stringify(this.user))
             this.alertService.success('User Profile updated successfully')
             const d = this.dialog.open(AlertComponent, {
                 width: '650px',
@@ -69,7 +70,6 @@ export class UserProfileComponent {
     onFileChange(event) {
         const reader = new FileReader();
         if (event.target.files && event.target.files.length > 0) {
-            console.log('1')
             const file = event.target.files[0];
             reader.onloadend = (e) => {
                     this.userItemForm.controls['imageUrl'].setValue(reader.result);

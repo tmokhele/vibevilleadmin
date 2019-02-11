@@ -6,13 +6,9 @@ import { AlertService } from 'app/shared/alert';
 import { MultifilesService } from 'app/services/multifiles.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { VgAPI } from 'videogular2/core';
+import { AlertComponent } from 'app/alert/alert-component';
+import { IMedia } from 'app/shared/model/media-model';
 
-
-export class IMedia {
-    source: string;
-    label: string;
-    type: string;
-}
 
 @Component({
     selector: 'app-video-item-form',
@@ -25,6 +21,7 @@ export class VideoComponent implements OnInit {
     public baseImageUrl: any = 'data:image/png;base64,'
     public baseVideoUrl: any = 'video:mp4;base64,'
     public videoUrl = ''
+    public documentType = ''
     api: VgAPI;
     currentIndex = 0;
     dialogRef: MatDialogRef<ConfirmationDialogComponent>;
@@ -71,6 +68,7 @@ export class VideoComponent implements OnInit {
     }
 
     retrieveDocuments(documentType: any) {
+        this.documentType = documentType
         this.galleryImages = []
         this.vids = []
         this.playlist = []
@@ -100,6 +98,7 @@ export class VideoComponent implements OnInit {
 
     private getMedia(key: string, documents: Map<string, string>) {
         const a = key.substring(key.indexOf('/') + 1);
+        console.log('key: '.concat(key))
         const media = new IMedia();
         media.source = documents[key];
         media.label = a;
@@ -110,6 +109,41 @@ export class VideoComponent implements OnInit {
     onClickPLaylistItem(item: IMedia, index: number) {
         this.currentIndex = index;
         this.currentItem = item;
+    }
+
+    onClickDeleteItem(item: IMedia,  index: number) {
+        this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            disableClose: false
+          });
+          this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?'
+          this.dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.multifilesService.deleteMedia(item).subscribe(() => {
+                    this.alertService.success(this.documentType.concat(' record deleted successfully'))
+                    const d =  this.dialog.open( AlertComponent, {
+                          width: '650px',
+                      });
+                    d.afterClosed().subscribe(closed => {
+                      if (closed) {
+                          switch (this.documentType) {
+                              case 'video':
+                              this.vids.splice(index, 1);
+                              break;
+                              case 'audio':
+                              this.playlist.splice(index, 1);
+                              break
+
+                            default:
+                            this.galleryImages.splice(index, 1);
+                            break;
+                          }
+                        this.alertService.clear();
+                      }
+                    })
+                })
+            }
+            this.dialogRef = null;
+          });
     }
 
     decline() {
