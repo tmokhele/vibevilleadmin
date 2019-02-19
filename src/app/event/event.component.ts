@@ -4,7 +4,7 @@ import { VenueService } from '../services/venue.service';
 import { AlertService } from 'app/shared/alert';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventItem } from 'app/shared/model/event-item';
-import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ShopItemFormValidators } from 'app/components/shop-item-form/shop-item-form.validators';
 import { ValidationService } from 'app/components/shop-item-form/form-validation.service';
 import { IShopItem } from 'app/shared/model/shop-item.interface';
@@ -36,6 +36,13 @@ export class EventComponent implements OnInit {
         this.e = this.venue.getSelectedEVent();
     }
 
+    getImage(): any {
+        if (this.e.imageUrl) {
+            return this.e.imageUrl;
+        } else {
+            return '../assets/img/faces/noimage.png';
+        }
+    }
     ngOnInit(): void {
         this.eventItemForm = this.formBuilder.group({
             'name': [this.e.name, Validators.compose([Validators.required, ShopItemFormValidators.nameValidator])],
@@ -68,7 +75,7 @@ export class EventComponent implements OnInit {
                 this.e.imageUrl
             ],
             'vip': [
-                (this.e.vipamount !== null && this.e.generalamount !== '')
+                (this.e.vipamount !== null && this.e.vipamount !== '')
             ],
             'general': [
                 (this.e.generalamount !== null && this.e.generalamount !== '')
@@ -98,6 +105,7 @@ export class EventComponent implements OnInit {
         if (event === 'general') {
             if (this.eventItemForm.get('general').value === true) {
                 this.eventItemForm.get('generalamount').enable();
+                this.eventItemForm.get('generalamount').setValue(this.e.generalamount)
                 this.ticketValue.push('general');
             }
             if (this.eventItemForm.get('general').value === false) {
@@ -110,6 +118,7 @@ export class EventComponent implements OnInit {
         if (event === 'vip') {
             if (this.eventItemForm.get('vip').value === true) {
                 this.eventItemForm.get('vipamount').enable();
+                this.eventItemForm.get('vipamount').setValue(this.e.vipamount)
                 this.ticketValue.push('vip');
             }
             if (this.eventItemForm.get('vip').value === false) {
@@ -122,6 +131,7 @@ export class EventComponent implements OnInit {
         if (event === 'early') {
             if (this.eventItemForm.get('early').value === true) {
                 this.eventItemForm.get('earlyamount').enable();
+                this.eventItemForm.get('earlyamount').setValue(this.e.earlyamount)
                 this.ticketValue.push('early');
             }
             if (this.eventItemForm.get('early').value === false) {
@@ -131,17 +141,16 @@ export class EventComponent implements OnInit {
                 this.ticketValue.splice(index, 10);
             }
         }
-        console.log('ticket value: ' + this.ticketValue)
     }
 
-    openDialog(shopItem?): void {
+    openDialog(): void {
         this.router.navigate(['/event']);
     }
 
     previewImage(imgUrl: any) {
         this.dialog.open(ImagePreviewComponent, {
             data: {
-              dataKey: imgUrl
+                dataKey: imgUrl
             }
         });
     }
@@ -149,8 +158,8 @@ export class EventComponent implements OnInit {
     editPerformance(p: any) {
         this.dialog.open(PerformanceComponent, {
             data: {
-              performance: p,
-              event: this.e
+                performance: p,
+                event: this.e
             }
         })
 
@@ -160,8 +169,8 @@ export class EventComponent implements OnInit {
         this.performance = new Performances()
         this.perfomranceRef = this.dialog.open(PerformanceComponent, {
             data: {
-              performance: this.performance,
-              event: this.e
+                performance: this.performance,
+                event: this.e
             }
         })
         this.perfomranceRef.afterClosed().subscribe(result => {
@@ -176,15 +185,15 @@ export class EventComponent implements OnInit {
     deletePerformance(performance: IPerformance) {
         this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             disableClose: false
-          });
-          this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to remove performance from event?'
-          this.dialogRef.afterClosed().subscribe(result => {
+        });
+        this.dialogRef.componentInstance.confirmMessage = 'Are you sure you want to remove performance from event?'
+        this.dialogRef.afterClosed().subscribe(result => {
             if (result) {
-               const index =  this.e.performances.indexOf(performance);
-               this.e.performances.splice(index, 1);
+                const index = this.e.performances.indexOf(performance);
+                this.e.performances.splice(index, 1);
             }
             this.dialogRef = null;
-          });
+        });
     }
 
     back() {
@@ -216,30 +225,48 @@ export class EventComponent implements OnInit {
         })
     }
 
-    ticketValidator(control: FormControl): { [s: string]: boolean } {
-        if (control.value) {
-            if (this.eventItemForm.get('general').value === true
-                && this.eventItemForm.get('generalamount').value === '') {
-                return { invalidAmount: false };
-            }
-            if (this.eventItemForm.get('vip').value === true
-                && this.eventItemForm.get('vipamount').value === '') {
-                return { invalidAmount: false };
-            }
-            if (this.eventItemForm.get('early').value === true
-                && this.eventItemForm.get('earlyamount').value === '') {
-                return { invalidAmount: false };
-            }
-        }
-    }
-
     isFieldRequired(): boolean {
-        return this.ticketValue.length < 1;
+        return (this.eventItemForm.get('vip').value === false
+            && this.eventItemForm.get('general').value === false
+            && this.eventItemForm.get('early').value === false)
     }
 
     isAmountRequired(): boolean {
-        return ((this.eventItemForm.get('earlyamount').value === undefined || this.eventItemForm.get('earlyamount').value === '') &&
-            (this.eventItemForm.get('vipamount').value === undefined || this.eventItemForm.get('vipamount').value === '') &&
-            (this.eventItemForm.get('generalamount').value === undefined || this.eventItemForm.get('generalamount').value === ''));
+        return ((this.eventItemForm.get('earlyamount').value === null || this.eventItemForm.get('earlyamount').value === '') &&
+            (this.eventItemForm.get('vipamount').value === null || this.eventItemForm.get('vipamount').value === '') &&
+            (this.eventItemForm.get('generalamount').value === null || this.eventItemForm.get('generalamount').value === ''));
+    }
+    onFileChange(event, s: number) {
+        const reader = new FileReader();
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            reader.onloadend = () => {
+                if (s === 1) {
+                    this.eventItemForm.controls['imageUrl'].setValue(reader.result);
+                    this.eventItemForm.get('imageUrl').setValue(reader.result)
+                    this.e.imageUrl = reader.result as string;
+                }
+                if (s === 2) {
+                    this.eventItemForm.controls['imageUrl'].setValue(reader.result);
+                    this.eventItemForm.get('imageUrl').setValue(reader.result)
+                    this.e.imageUrl = reader.result as string;
+                }
+            }
+            reader.readAsDataURL(file);
+        };
+    }
+    applyFilter(filterValue: string, index: number) {
+        filterValue = filterValue.trim();
+        switch (index) {
+            case 0:
+                this.e.earlyamount = filterValue;
+                break
+            case 1:
+                this.e.vipamount = filterValue;
+                break;
+            default:
+                this.e.generalamount = filterValue
+        }
+
     }
 }

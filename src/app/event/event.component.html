@@ -6,10 +6,10 @@
                 <div class="card card-profile">
                     <div class="card-avatar">
                         <div for="image-click" class="hovereffect">
-                            <img class="img-responsive" src="{{e.imageUrl}}" />
+                            <img class="img-responsive"  [src]="getImage()" />
                             <div class="overlay">
 
-                                <a href="javascript:void(0);" class="info" (click)="previewImage(e.imageUrl)">Preview</a>
+                                <a href="javascript:void(0);" class="info" (click)="previewImage(getImage())">Preview</a>
                             </div>
                         </div>
 
@@ -32,7 +32,7 @@
                                             [required]="isFieldRequired() ? 'required' : null">
                                             <mat-form-field class="standard">
                                                 <input matInput placeholder="Early Bird Tickets" formControlName="earlyamount"
-                                                    [required]="isAmountRequired() ? 'required' : null">
+                                                    [required]="isAmountRequired() ? 'required' : null"  (keyup)="applyFilter($event.target.value,0)">
                                                 <span matPrefix>R&nbsp;</span>
                                                 <span matSuffix>.00</span>
                                                 <mat-error *ngIf="validation.check('early').result || validation.check('earlyamount').result ">
@@ -48,7 +48,7 @@
                                             [required]="isFieldRequired() ? 'required' : null">
                                             <mat-form-field class="standard">
                                                 <input matInput placeholder="Vip" formControlName="vipamount"
-                                                    [required]="isAmountRequired() ? 'required' : null">
+                                                    [required]="isAmountRequired() ? 'required' : null"  (keyup)="applyFilter($event.target.value,1)">
                                                 <span matPrefix>R&nbsp;</span>
                                                 <span matSuffix>.00</span>
                                                 <mat-error *ngIf="validation.check('vip').result || validation.check('vipamount').result ">
@@ -63,7 +63,7 @@
                                             [required]="isFieldRequired() ? 'required' : null">
                                             <mat-form-field class="standard">
                                                 <input matInput placeholder="General Access" formControlName="generalamount"
-                                                    [required]="isAmountRequired() ? 'required' : null">
+                                                    [required]="isAmountRequired() ? 'required' : null"  (keyup)="applyFilter($event.target.value,2)">
                                                 <span matPrefix>R&nbsp;</span>
                                                 <span matSuffix>.00</span>
                                                 <mat-error *ngIf="validation.check('general').result || validation.check('generalamount').result">
