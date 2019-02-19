@@ -42,10 +42,11 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <mat-checkbox type="checkbox" formControlName="early" (change)="onChange($event)">
+                                                        <mat-checkbox type="checkbox" formControlName="early" (change)="onChange($event)"
+                                                        [required]="isFieldRequired() ? 'required' : null">
                                                             <mat-form-field class="standard">
                                                                 <input matInput placeholder="Early Bird Tickets"
-                                                                    formControlName="earlyamount">
+                                                                    formControlName="earlyamount" [required]="isAmountRequired() ? 'required' : null" >
                                                                 <span matPrefix>R&nbsp;</span>
                                                                 <span matSuffix>.00</span>
                                                                 <mat-error *ngIf="validation.check('early').result || validation.check('earlyamount').result ">
@@ -57,9 +58,10 @@
 
                                                     </div>
                                                     <div class="row">
-                                                        <mat-checkbox type="checkbox" formControlName="vip" (change)="onChange($event)">
+                                                        <mat-checkbox type="checkbox" formControlName="vip" (change)="onChange($event)"
+                                                        [required]="isFieldRequired() ? 'required' : null">
                                                             <mat-form-field class="standard">
-                                                                <input matInput placeholder="Vip" formControlName="vipamount">
+                                                                <input matInput placeholder="Vip" formControlName="vipamount" [required]="isAmountRequired() ? 'required' : null" >
                                                                 <span matPrefix>R&nbsp;</span>
                                                                 <span matSuffix>.00</span>
                                                                 <mat-error *ngIf="validation.check('vip').result || validation.check('vipamount').result ">
@@ -71,10 +73,10 @@
                                                     </div>
                                                     <div class="row">
                                                         <mat-checkbox type="checkbox" formControlName="general"
-                                                            (change)="onChange($event)">
+                                                            (change)="onChange($event)" [required]="isFieldRequired() ? 'required' : null">
                                                             <mat-form-field class="standard">
                                                                 <input matInput placeholder="General Access"
-                                                                    formControlName="generalamount">
+                                                                    formControlName="generalamount" [required]="isAmountRequired() ? 'required' : null" >
                                                                 <span matPrefix>R&nbsp;</span>
                                                                 <span matSuffix>.00</span>
                                                                 <mat-error *ngIf="validation.check('general').result || validation.check('generalamount').result">

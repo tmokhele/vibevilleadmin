@@ -42,6 +42,8 @@ export class FormComponent implements OnInit {
     ) {
 
     }
+
+
     submitItem(form: any): void {
         if (form.valid) {
             const result: IShopItem = Object.assign({}, this.shopItemForm.value);
@@ -104,35 +106,26 @@ export class FormComponent implements OnInit {
                 ''
             ],
             'earlyamount': [
-                { value: '', disabled: true },
-                Validators.compose([
-                    this.ticketValidator.bind(this)])
+                { value: '', disabled: true }, Validators.pattern('^[0-9]*$')
             ],
             'vipamount': [
-                { value: '', disabled: true },
-                Validators.compose([
-                    this.ticketValidator.bind(this)])
+                { value: '', disabled: true }, Validators.pattern('^[0-9]*$')
             ],
             'generalamount': [
-                { value: '', disabled: true },
-                Validators.compose([
-                    this.ticketValidator.bind(this)])
+                { value: '', disabled: true }, Validators.pattern('^[0-9]*$')
             ]
             ,
             'imageUrl': [
                 ''
             ],
             'vip': [
-                false,
-                Validators.compose([this.ticketValidator.bind(this)])
+                false
             ],
             'general': [
-                false,
-                Validators.compose([this.ticketValidator.bind(this)])
+                false
             ],
             'early': [
-                false,
-                Validators.compose([this.ticketValidator.bind(this)])
+                false
             ]
         });
 
@@ -150,6 +143,12 @@ export class FormComponent implements OnInit {
             },
             {}
         );
+    }
+
+    isFieldRequired(): boolean {
+        return (this.shopItemForm.get('vip').value === false
+            && this.shopItemForm.get('general').value === false
+            && this.shopItemForm.get('early').value === false)
     }
 
     onCountrySelectionChanged(changeEvent) {
@@ -179,14 +178,7 @@ export class FormComponent implements OnInit {
             this.shopItemForm.get('earlyamount').disable();
         }
     }
-    ticketValidator(control: FormControl): { [s: string]: boolean } {
-        if (control.value) {
-            if (this.shopItemForm.get('general').value === true
-                && this.shopItemForm.get('generalamount').value === '') {
-                return { invalidAmount: false };
-            }
-        }
-    }
+
     onFileChange(event, s: number) {
         const reader = new FileReader();
         if (event.target.files && event.target.files.length > 0) {
@@ -273,5 +265,11 @@ export class FormComponent implements OnInit {
         if (this.performanceForm.invalid && this.performances.length === 0) {
             return true;
         }
+    }
+
+    isAmountRequired(): boolean {
+        return ((this.shopItemForm.get('earlyamount').value === null || this.shopItemForm.get('earlyamount').value === '') &&
+            (this.shopItemForm.get('vipamount').value === null || this.shopItemForm.get('vipamount').value === '') &&
+            (this.shopItemForm.get('generalamount').value === null || this.shopItemForm.get('generalamount').value === ''));
     }
 }
